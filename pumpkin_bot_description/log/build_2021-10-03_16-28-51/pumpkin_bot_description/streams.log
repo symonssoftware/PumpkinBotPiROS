@@ -1,0 +1,62 @@
+[0.106s] Invoking command in '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy /usr/bin/cmake /home/ubuntu/ros2_ws/src/pumpkin_bot_description -DCMAKE_INSTALL_PREFIX=/home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description
+[0.946s] -- The C compiler identification is GNU 9.3.0
+[1.583s] -- The CXX compiler identification is GNU 9.3.0
+[1.667s] -- Check for working C compiler: /usr/bin/cc
+[2.141s] -- Check for working C compiler: /usr/bin/cc -- works
+[2.150s] -- Detecting C compiler ABI info
+[2.636s] -- Detecting C compiler ABI info - done
+[2.800s] -- Detecting C compile features
+[2.936s] -- Detecting C compile features - done
+[3.514s] -- Check for working CXX compiler: /usr/bin/c++
+[5.115s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[5.129s] -- Detecting CXX compiler ABI info
+[5.712s] -- Detecting CXX compiler ABI info - done
+[5.764s] -- Detecting CXX compile features
+[5.767s] -- Detecting CXX compile features - done
+[5.810s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+[6.117s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[6.118s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[7.745s] -- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[8.292s] -- Added test 'copyright' to check source files copyright and LICENSE
+[8.356s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[8.356s] -- Configured cppcheck include dirs: 
+[8.357s] -- Configured cppcheck exclude dirs and/or files: 
+[8.415s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[8.415s] -- Configured cpplint exclude dirs and/or files: 
+[8.428s] -- Added test 'flake8' to check Python code syntax and style conventions
+[8.446s] -- Added test 'lint_cmake' to check CMake code style
+[8.457s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[8.526s] -- Added test 'uncrustify' to check C / C++ code style
+[8.526s] -- Configured uncrustify additional arguments: 
+[8.538s] -- Added test 'xmllint' to check XML markup files
+[8.563s] -- Configuring done
+[8.576s] -- Generating done
+[8.582s] -- Build files have been written to: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description
+[8.600s] Invoked command in '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy /usr/bin/cmake /home/ubuntu/ros2_ws/src/pumpkin_bot_description -DCMAKE_INSTALL_PREFIX=/home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description
+[8.616s] Invoking command in '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy /usr/bin/cmake --build /home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description -- -j4 -l4
+[8.871s] Invoked command in '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy /usr/bin/cmake --build /home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description -- -j4 -l4
+[9.086s] Invoking command in '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy /usr/bin/cmake --install /home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description
+[9.141s] -- Install configuration: ""
+[9.141s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/src
+[9.142s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/src/description
+[9.143s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/src/description/pumpkin_bot_description.urdf
+[9.144s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/launch
+[9.145s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/launch/display.launch.py
+[9.146s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/rviz
+[9.147s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/rviz/urdf_config.rviz
+[9.148s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/ament_index/resource_index/package_run_dependencies/pumpkin_bot_description
+[9.151s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/ament_index/resource_index/parent_prefix_path/pumpkin_bot_description
+[9.153s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/ament_prefix_path.sh
+[9.154s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/ament_prefix_path.dsv
+[9.156s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/path.sh
+[9.166s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/path.dsv
+[9.167s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.bash
+[9.168s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.sh
+[9.169s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.zsh
+[9.170s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.dsv
+[9.170s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/package.dsv
+[9.171s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/ament_index/resource_index/packages/pumpkin_bot_description
+[9.172s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/cmake/pumpkin_bot_descriptionConfig.cmake
+[9.173s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/cmake/pumpkin_bot_descriptionConfig-version.cmake
+[9.173s] -- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/package.xml
+[9.185s] Invoked command in '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy /usr/bin/cmake --install /home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description

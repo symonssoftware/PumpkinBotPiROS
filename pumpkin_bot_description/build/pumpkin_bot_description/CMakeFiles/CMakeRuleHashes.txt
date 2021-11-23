@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+2ee3d5d193c5c02f2a00d1c35d155773 CMakeFiles/pumpkin_bot_description_uninstall

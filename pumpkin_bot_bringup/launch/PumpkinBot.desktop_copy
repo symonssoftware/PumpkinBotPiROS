@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=PumpkinBot
+Version=v0.0.1
+Icon=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/launch/pumpkin.png
+X-Icon-Path=
+TerminalOptions=bash
+Exec=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/launch/launch_pumpkin_bot.sh
+Exec=bash -c "source /opt/ros/foxy/setup.bash;source ~/ros2_ws/install/setup.bash;~/ros2_ws/src/pumpkin_bot_bringup/launch/launch_pumpkin_bot.sh"
+Terminal=false
+Type=Application

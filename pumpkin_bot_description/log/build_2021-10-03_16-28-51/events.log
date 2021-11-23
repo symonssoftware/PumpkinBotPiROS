@@ -1,0 +1,161 @@
+[0.000000] (-) TimerEvent: {}
+[0.000850] (pumpkin_bot_description) JobQueued: {'identifier': 'pumpkin_bot_description', 'dependencies': OrderedDict()}
+[0.002664] (pumpkin_bot_description) JobStarted: {'identifier': 'pumpkin_bot_description'}
+[0.101935] (-) TimerEvent: {}
+[0.103846] (pumpkin_bot_description) JobProgress: {'identifier': 'pumpkin_bot_description', 'progress': 'cmake'}
+[0.105033] (pumpkin_bot_description) Command: {'cmd': ['/usr/bin/cmake', '/home/ubuntu/ros2_ws/src/pumpkin_bot_description', '-DCMAKE_INSTALL_PREFIX=/home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description'], 'cwd': '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'ubuntu'), ('SSH_AGENT_PID', '4269'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ubuntu/microros_ws/install/micro_ros_agent/lib:/home/ubuntu/microros_ws/install/micro_ros_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/ubuntu'), ('OLDPWD', '/home/ubuntu/ros2_ws/src'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '4104'), ('XRDP_PULSE_SOURCE_SOCKET', 'xrdp_chansrv_audio_in_socket_10'), ('XRDP_PULSE_SINK_SOCKET', 'xrdp_chansrv_audio_out_socket_10'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator2bcb3aa092f2b6032576f3fd56ad9afe9'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4664'), ('PULSE_SCRIPT', '/etc/xrdp/pulse/default.pa'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/ubuntu/microros_ws/install:/home/ubuntu/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ubuntu'), ('JOURNAL_STREAM', '9:92004'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/ubuntu:@/tmp/.ICE-unix/4347,unix/ubuntu:/tmp/.ICE-unix/4347'), ('INVOCATION_ID', '591d47620e6c4ba7b05c7c343ae86a90'), ('XDG_MENU_PREFIX', 'gnome-'), ('XRDP_SOCKET_PATH', '/run/xrdp/sockdir'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':10.0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ubuntu/ros2_ws/install/rplidar_ros2:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/home/ubuntu/ros2_ws/install/my_cpp_pkg:/home/ubuntu/microros_ws/install/micro_ros_setup:/home/ubuntu/microros_ws/install/micro_ros_agent:/home/ubuntu/microros_ws/install/micro_ros_msgs:/opt/ros/foxy'), ('UID', '1000'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:eb2cb87f-386c-4621-9065-87fccbe86850'), ('QT_ACCESSIBILITY', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('XRDP_SESSION', '1'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ubuntu/ros2_ws/build/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.8/site-packages:/home/ubuntu/ros2_ws/build/my_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg/lib/python3.8/site-packages:/home/ubuntu/microros_ws/install/micro_ros_msgs/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/ubuntu/ros2_ws/install/rplidar_ros2:/home/ubuntu/ros2_ws/install/my_cpp_pkg:/home/ubuntu/microros_ws/install/micro_ros_setup:/home/ubuntu/microros_ws/install/micro_ros_agent:/home/ubuntu/microros_ws/install/micro_ros_msgs:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy')]), 'shell': False}
+[0.202226] (-) TimerEvent: {}
+[0.303495] (-) TimerEvent: {}
+[0.405721] (-) TimerEvent: {}
+[0.517303] (-) TimerEvent: {}
+[0.618497] (-) TimerEvent: {}
+[0.719826] (-) TimerEvent: {}
+[0.821040] (-) TimerEvent: {}
+[0.922989] (-) TimerEvent: {}
+[0.947093] (pumpkin_bot_description) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.3.0\n'}
+[1.023124] (-) TimerEvent: {}
+[1.124118] (-) TimerEvent: {}
+[1.225610] (-) TimerEvent: {}
+[1.326663] (-) TimerEvent: {}
+[1.427732] (-) TimerEvent: {}
+[1.528908] (-) TimerEvent: {}
+[1.585278] (pumpkin_bot_description) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.3.0\n'}
+[1.629142] (-) TimerEvent: {}
+[1.669475] (pumpkin_bot_description) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[1.729376] (-) TimerEvent: {}
+[1.830405] (-) TimerEvent: {}
+[1.931941] (-) TimerEvent: {}
+[2.033031] (-) TimerEvent: {}
+[2.135180] (-) TimerEvent: {}
+[2.143549] (pumpkin_bot_description) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[2.151854] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[2.235353] (-) TimerEvent: {}
+[2.337073] (-) TimerEvent: {}
+[2.439558] (-) TimerEvent: {}
+[2.542022] (-) TimerEvent: {}
+[2.638601] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[2.642267] (-) TimerEvent: {}
+[2.743340] (-) TimerEvent: {}
+[2.801807] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[2.843560] (-) TimerEvent: {}
+[2.938352] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[2.943790] (-) TimerEvent: {}
+[3.044707] (-) TimerEvent: {}
+[3.098516] (pumpkin_bot_description) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[3.517507] (-) TimerEvent: {}
+[3.620859] (-) TimerEvent: {}
+[3.721921] (-) TimerEvent: {}
+[3.823987] (-) TimerEvent: {}
+[3.924877] (-) TimerEvent: {}
+[4.026031] (-) TimerEvent: {}
+[4.127768] (-) TimerEvent: {}
+[4.229509] (-) TimerEvent: {}
+[4.330336] (-) TimerEvent: {}
+[4.431610] (-) TimerEvent: {}
+[4.532708] (-) TimerEvent: {}
+[4.633709] (-) TimerEvent: {}
+[4.734718] (-) TimerEvent: {}
+[4.835539] (-) TimerEvent: {}
+[4.941589] (-) TimerEvent: {}
+[5.042763] (-) TimerEvent: {}
+[5.116703] (pumpkin_bot_description) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[5.131065] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[5.143048] (-) TimerEvent: {}
+[5.244261] (-) TimerEvent: {}
+[5.346331] (-) TimerEvent: {}
+[5.447544] (-) TimerEvent: {}
+[5.548825] (-) TimerEvent: {}
+[5.653184] (-) TimerEvent: {}
+[5.714121] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[5.753306] (-) TimerEvent: {}
+[5.766130] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[5.768854] (pumpkin_bot_description) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[5.812559] (pumpkin_bot_description) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[5.853531] (-) TimerEvent: {}
+[5.955240] (-) TimerEvent: {}
+[6.056449] (-) TimerEvent: {}
+[6.118903] (pumpkin_bot_description) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[6.119872] (pumpkin_bot_description) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[6.156764] (-) TimerEvent: {}
+[6.257737] (-) TimerEvent: {}
+[6.358705] (-) TimerEvent: {}
+[6.461296] (-) TimerEvent: {}
+[6.562189] (-) TimerEvent: {}
+[6.663831] (-) TimerEvent: {}
+[6.766132] (-) TimerEvent: {}
+[6.867478] (-) TimerEvent: {}
+[6.969730] (-) TimerEvent: {}
+[7.070936] (-) TimerEvent: {}
+[7.172116] (-) TimerEvent: {}
+[7.273174] (-) TimerEvent: {}
+[7.373965] (-) TimerEvent: {}
+[7.474733] (-) TimerEvent: {}
+[7.575585] (-) TimerEvent: {}
+[7.676764] (-) TimerEvent: {}
+[7.747067] (pumpkin_bot_description) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[7.776967] (-) TimerEvent: {}
+[7.877711] (-) TimerEvent: {}
+[7.978468] (-) TimerEvent: {}
+[8.079305] (-) TimerEvent: {}
+[8.180212] (-) TimerEvent: {}
+[8.281090] (-) TimerEvent: {}
+[8.294574] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[8.357459] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[8.358613] (pumpkin_bot_description) StdoutLine: {'line': b'-- Configured cppcheck include dirs: \n'}
+[8.359216] (pumpkin_bot_description) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[8.381243] (-) TimerEvent: {}
+[8.417079] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[8.417799] (pumpkin_bot_description) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[8.429893] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[8.448373] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[8.459526] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[8.481476] (-) TimerEvent: {}
+[8.527789] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[8.528503] (pumpkin_bot_description) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[8.540410] (pumpkin_bot_description) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[8.565082] (pumpkin_bot_description) StdoutLine: {'line': b'-- Configuring done\n'}
+[8.577771] (pumpkin_bot_description) StdoutLine: {'line': b'-- Generating done\n'}
+[8.581679] (-) TimerEvent: {}
+[8.584187] (pumpkin_bot_description) StdoutLine: {'line': b'-- Build files have been written to: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description\n'}
+[8.601520] (pumpkin_bot_description) CommandEnded: {'returncode': 0}
+[8.604741] (pumpkin_bot_description) JobProgress: {'identifier': 'pumpkin_bot_description', 'progress': 'build'}
+[8.615371] (pumpkin_bot_description) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description', '--', '-j4', '-l4'], 'cwd': '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'ubuntu'), ('SSH_AGENT_PID', '4269'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ubuntu/microros_ws/install/micro_ros_agent/lib:/home/ubuntu/microros_ws/install/micro_ros_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/ubuntu'), ('OLDPWD', '/home/ubuntu/ros2_ws/src'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '4104'), ('XRDP_PULSE_SOURCE_SOCKET', 'xrdp_chansrv_audio_in_socket_10'), ('XRDP_PULSE_SINK_SOCKET', 'xrdp_chansrv_audio_out_socket_10'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator2bcb3aa092f2b6032576f3fd56ad9afe9'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4664'), ('PULSE_SCRIPT', '/etc/xrdp/pulse/default.pa'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/ubuntu/microros_ws/install:/home/ubuntu/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ubuntu'), ('JOURNAL_STREAM', '9:92004'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/ubuntu:@/tmp/.ICE-unix/4347,unix/ubuntu:/tmp/.ICE-unix/4347'), ('INVOCATION_ID', '591d47620e6c4ba7b05c7c343ae86a90'), ('XDG_MENU_PREFIX', 'gnome-'), ('XRDP_SOCKET_PATH', '/run/xrdp/sockdir'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':10.0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ubuntu/ros2_ws/install/rplidar_ros2:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/home/ubuntu/ros2_ws/install/my_cpp_pkg:/home/ubuntu/microros_ws/install/micro_ros_setup:/home/ubuntu/microros_ws/install/micro_ros_agent:/home/ubuntu/microros_ws/install/micro_ros_msgs:/opt/ros/foxy'), ('UID', '1000'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:eb2cb87f-386c-4621-9065-87fccbe86850'), ('QT_ACCESSIBILITY', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('XRDP_SESSION', '1'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ubuntu/ros2_ws/build/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.8/site-packages:/home/ubuntu/ros2_ws/build/my_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg/lib/python3.8/site-packages:/home/ubuntu/microros_ws/install/micro_ros_msgs/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/ubuntu/ros2_ws/install/rplidar_ros2:/home/ubuntu/ros2_ws/install/my_cpp_pkg:/home/ubuntu/microros_ws/install/micro_ros_setup:/home/ubuntu/microros_ws/install/micro_ros_agent:/home/ubuntu/microros_ws/install/micro_ros_msgs:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy')]), 'shell': False}
+[8.682005] (-) TimerEvent: {}
+[8.783353] (-) TimerEvent: {}
+[8.865386] (pumpkin_bot_description) CommandEnded: {'returncode': 0}
+[8.883634] (-) TimerEvent: {}
+[8.985182] (-) TimerEvent: {}
+[9.017443] (pumpkin_bot_description) JobProgress: {'identifier': 'pumpkin_bot_description', 'progress': 'install'}
+[9.082884] (pumpkin_bot_description) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description'], 'cwd': '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'ubuntu'), ('SSH_AGENT_PID', '4269'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ubuntu/microros_ws/install/micro_ros_agent/lib:/home/ubuntu/microros_ws/install/micro_ros_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/ubuntu'), ('OLDPWD', '/home/ubuntu/ros2_ws/src'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '4104'), ('XRDP_PULSE_SOURCE_SOCKET', 'xrdp_chansrv_audio_in_socket_10'), ('XRDP_PULSE_SINK_SOCKET', 'xrdp_chansrv_audio_out_socket_10'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator2bcb3aa092f2b6032576f3fd56ad9afe9'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4664'), ('PULSE_SCRIPT', '/etc/xrdp/pulse/default.pa'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/ubuntu/microros_ws/install:/home/ubuntu/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'ubuntu'), ('JOURNAL_STREAM', '9:92004'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/ubuntu:@/tmp/.ICE-unix/4347,unix/ubuntu:/tmp/.ICE-unix/4347'), ('INVOCATION_ID', '591d47620e6c4ba7b05c7c343ae86a90'), ('XDG_MENU_PREFIX', 'gnome-'), ('XRDP_SOCKET_PATH', '/run/xrdp/sockdir'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':10.0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ubuntu/ros2_ws/install/rplidar_ros2:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/home/ubuntu/ros2_ws/install/my_cpp_pkg:/home/ubuntu/microros_ws/install/micro_ros_setup:/home/ubuntu/microros_ws/install/micro_ros_agent:/home/ubuntu/microros_ws/install/micro_ros_msgs:/opt/ros/foxy'), ('UID', '1000'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:eb2cb87f-386c-4621-9065-87fccbe86850'), ('QT_ACCESSIBILITY', '1'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('XRDP_SESSION', '1'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ubuntu/ros2_ws/src/pumpkin_bot_description/build/pumpkin_bot_description'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ubuntu/ros2_ws/build/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.8/site-packages:/home/ubuntu/ros2_ws/build/my_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg/lib/python3.8/site-packages:/home/ubuntu/microros_ws/install/micro_ros_msgs/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/ubuntu/ros2_ws/install/rplidar_ros2:/home/ubuntu/ros2_ws/install/my_cpp_pkg:/home/ubuntu/microros_ws/install/micro_ros_setup:/home/ubuntu/microros_ws/install/micro_ros_agent:/home/ubuntu/microros_ws/install/micro_ros_msgs:/home/ubuntu/ros2_ws/install/pumpkin_py_pkg:/home/ubuntu/ros2_ws/install/my_py_pkg:/opt/ros/foxy')]), 'shell': False}
+[9.090207] (-) TimerEvent: {}
+[9.142508] (pumpkin_bot_description) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[9.143648] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/src\n'}
+[9.144588] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/src/description\n'}
+[9.145434] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/src/description/pumpkin_bot_description.urdf\n'}
+[9.146567] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/launch\n'}
+[9.147315] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/launch/display.launch.py\n'}
+[9.148302] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/rviz\n'}
+[9.149601] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/rviz/urdf_config.rviz\n'}
+[9.150658] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/ament_index/resource_index/package_run_dependencies/pumpkin_bot_description\n'}
+[9.152997] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/ament_index/resource_index/parent_prefix_path/pumpkin_bot_description\n'}
+[9.154919] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/ament_prefix_path.sh\n'}
+[9.156475] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/ament_prefix_path.dsv\n'}
+[9.158212] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/path.sh\n'}
+[9.167953] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/environment/path.dsv\n'}
+[9.168814] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.bash\n'}
+[9.169532] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.sh\n'}
+[9.170800] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.zsh\n'}
+[9.171692] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/local_setup.dsv\n'}
+[9.172512] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/package.dsv\n'}
+[9.173469] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/ament_index/resource_index/packages/pumpkin_bot_description\n'}
+[9.174116] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/cmake/pumpkin_bot_descriptionConfig.cmake\n'}
+[9.174821] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/cmake/pumpkin_bot_descriptionConfig-version.cmake\n'}
+[9.175642] (pumpkin_bot_description) StdoutLine: {'line': b'-- Installing: /home/ubuntu/ros2_ws/src/pumpkin_bot_description/install/pumpkin_bot_description/share/pumpkin_bot_description/package.xml\n'}
+[9.184931] (pumpkin_bot_description) CommandEnded: {'returncode': 0}
+[9.190644] (-) TimerEvent: {}
+[9.292835] (-) TimerEvent: {}
+[9.394615] (-) TimerEvent: {}
+[9.495900] (-) TimerEvent: {}
+[9.591757] (pumpkin_bot_description) JobEnded: {'identifier': 'pumpkin_bot_description', 'rc': 0}
+[9.596296] (-) TimerEvent: {}
+[9.597491] (-) EventReactorShutdown: {}
