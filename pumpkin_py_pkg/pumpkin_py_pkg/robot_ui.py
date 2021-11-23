@@ -146,7 +146,7 @@ class RobotUserInterface(tk.Tk):
 
     def startNavigation(self):
         #self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "navigation_launch.py", "use_sim_time:=false"])
-        self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "bringup_launch.py", "use_sim_time:=false", "map:=/home/ubuntu/bonus_room.yaml"])
+        self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "bringup_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/nav2_params.yaml", "map:=/home/ubuntu/bonus_room.yaml"])
         #self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "localization_launch.py", "use_sim_time:=false"])
         time.sleep(1)
 
