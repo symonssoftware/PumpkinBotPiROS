@@ -20,8 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "robot_ui = pumpkin_py_pkg.robot_ui:main",
-            "odometry = pumpkin_py_pkg.odometry:main"
+            "robot_ui = pumpkin_py_pkg.robot_ui:main"
         ],
     },
 )

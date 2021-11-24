@@ -92,7 +92,7 @@ private:
         }
 
         mLastTimeJointStateMsgReceived = currentMessageTimeReceived;
-     }
+    }
 
     double mOdomX = 0.0;
     double mOdomY = 0.0;
