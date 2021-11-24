@@ -68,7 +68,7 @@ private:
             odomTransformMsg.transform.rotation.z = q.z();
             odomTransformMsg.transform.rotation.w = q.w();
 
-            transformBroadcaster.sendTransform(odomTransformMsg);
+            //transformBroadcaster.sendTransform(odomTransformMsg);
 
             nav_msgs::msg::Odometry odomMsg;
             odomMsg.header.stamp = this->now();
