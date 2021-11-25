@@ -68,6 +68,7 @@ private:
             odomTransformMsg.transform.rotation.z = q.z();
             odomTransformMsg.transform.rotation.w = q.w();
 
+            // Shouldn't need to send this if we're using localization from SLAM Toolbox, right?
             //transformBroadcaster.sendTransform(odomTransformMsg);
 
             nav_msgs::msg::Odometry odomMsg;
@@ -85,8 +86,27 @@ private:
             odomMsg.pose.pose.orientation.w = q.w();
 
             odomMsg.twist.twist.linear.x = vX;
-            odomMsg.twist.twist.linear.y = 0.0;
+            odomMsg.twist.twist.linear.y = vY;
+            odomMsg.twist.twist.linear.z = 0.0;
+            odomMsg.twist.twist.angular.x = 0.0;
+            odomMsg.twist.twist.angular.y = 0.0;
             odomMsg.twist.twist.angular.z = vTh;
+
+            for (int i = 0; i<36; i++) 
+            {
+                if(i == 0 || i == 7 || i == 14) 
+                {
+                    odomMsg.pose.covariance[i] = .01;
+                }
+                else if (i == 21 || i == 28 || i== 35) 
+                {
+                    odomMsg.pose.covariance[i] += 0.1;
+                }
+                else 
+                {
+                    odomMsg.pose.covariance[i] = 0;
+                }
+            }
 
             mOdometryPublisher->publish(odomMsg);
         }
