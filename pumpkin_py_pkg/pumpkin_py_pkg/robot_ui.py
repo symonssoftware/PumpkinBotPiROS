@@ -26,6 +26,7 @@ class RobotUserInterface(tk.Tk):
 
         self.lidarDemoStarted = False
         self.lastZAxisValue = 0.0
+        self.navAndSlamStarted = False
 
         # Create the main window
         self.title("Pumpkin Bot")
@@ -143,6 +144,7 @@ class RobotUserInterface(tk.Tk):
         self.statusLabel.config(text="Status: Powering on Teensy board...")
         self.powerOnTeensy()
         self.statusLabel.config(text="Status: Initialization complete!")
+        time.sleep(3)
 
     def startNavigation(self):
         #self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "bringup_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/nav2_params.yaml", "map:=/home/ubuntu/bonus_room.yaml"])
@@ -152,6 +154,7 @@ class RobotUserInterface(tk.Tk):
     def startSLAM(self):
         #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "offline_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_offline.yaml"])
         self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_async_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_async.yaml"])
+        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_sync_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_sync.yaml"])
         #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "localization_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_localization.yaml"])
         time.sleep(1)
 

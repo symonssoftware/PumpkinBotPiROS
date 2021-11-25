@@ -48,7 +48,8 @@ private:
             mOdomY += deltaY;
             mOdomTh += deltaTh;
 
-            static tf2_ros::TransformBroadcaster transformBroadcaster(this);
+            // Shouldn't need to send this if we're using Robot Localization and EKF
+            /*static tf2_ros::TransformBroadcaster transformBroadcaster(this);
 
             geometry_msgs::msg::TransformStamped odomTransformMsg;
         
@@ -59,17 +60,16 @@ private:
 
             odomTransformMsg.transform.translation.x = mOdomX;
             odomTransformMsg.transform.translation.y = mOdomY;
-            odomTransformMsg.transform.translation.z = 0.0;
+            odomTransformMsg.transform.translation.z = 0.0;*/
 
             tf2::Quaternion q;
             q.setRPY(0, 0, mOdomTh);
-            odomTransformMsg.transform.rotation.x = q.x();
+            /*odomTransformMsg.transform.rotation.x = q.x();
             odomTransformMsg.transform.rotation.y = q.y();
             odomTransformMsg.transform.rotation.z = q.z();
             odomTransformMsg.transform.rotation.w = q.w();
 
-            // Shouldn't need to send this if we're using localization from SLAM Toolbox, right?
-            //transformBroadcaster.sendTransform(odomTransformMsg);
+            transformBroadcaster.sendTransform(odomTransformMsg); */
 
             nav_msgs::msg::Odometry odomMsg;
             odomMsg.header.stamp = this->now();
