@@ -26,7 +26,6 @@ class RobotUserInterface(tk.Tk):
 
         self.lidarDemoStarted = False
         self.lastZAxisValue = 0.0
-        self.navAndSlamStarted = False
 
         # Create the main window
         self.title("Pumpkin Bot")

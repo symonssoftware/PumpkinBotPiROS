@@ -12,7 +12,7 @@ class OdometryNode : public rclcpp::Node
 public:
     OdometryNode() : Node("odometry") 
     {
-        mOdometryPublisher = this->create_publisher<nav_msgs::msg::Odometry>("/odom", 10);
+        mOdometryPublisher = this->create_publisher<nav_msgs::msg::Odometry>("/wheel/odometry", 10);
         mJointStatesSubscriber = this->create_subscription<sensor_msgs::msg::JointState>(
             "/joint_states", 10, 
             std::bind(&OdometryNode::callbackJointStates, this, std::placeholders::_1));
@@ -91,22 +91,6 @@ private:
             odomMsg.twist.twist.angular.x = 0.0;
             odomMsg.twist.twist.angular.y = 0.0;
             odomMsg.twist.twist.angular.z = vTh;
-
-            for (int i = 0; i<36; i++) 
-            {
-                if(i == 0 || i == 7 || i == 14) 
-                {
-                    odomMsg.pose.covariance[i] = .01;
-                }
-                else if (i == 21 || i == 28 || i== 35) 
-                {
-                    odomMsg.pose.covariance[i] += 0.1;
-                }
-                else 
-                {
-                    odomMsg.pose.covariance[i] = 0;
-                }
-            }
 
             mOdometryPublisher->publish(odomMsg);
         }
