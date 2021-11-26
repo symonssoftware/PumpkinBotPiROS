@@ -12,9 +12,9 @@ class OdometryNode : public rclcpp::Node
 public:
     OdometryNode() : Node("odometry") 
     {
-        mOdometryPublisher = this->create_publisher<nav_msgs::msg::Odometry>("/wheel/odometry", 10);
+        mOdometryPublisher = this->create_publisher<nav_msgs::msg::Odometry>("/wheel/odometry", 100);
         mJointStatesSubscriber = this->create_subscription<sensor_msgs::msg::JointState>(
-            "/joint_states", 10, 
+            "/joint_states", 100, 
             std::bind(&OdometryNode::callbackJointStates, this, std::placeholders::_1));
 
         RCLCPP_INFO(this->get_logger(), "Odometry Node has been started."); 
@@ -23,33 +23,33 @@ public:
 private:
     void callbackJointStates(const sensor_msgs::msg::JointState::SharedPtr msg)
     {
-        double currentMessageTimeReceived = (msg->header.stamp.sec + (msg->header.stamp.nanosec / 1000000000.0));
+        rclcpp::Time currentMessageTime = this->now();
 
-        if ((mLastTimeJointStateMsgReceived > 0.0) &&
-            (currentMessageTimeReceived > mLastTimeJointStateMsgReceived))
-        {
-            double dt = currentMessageTimeReceived - mLastTimeJointStateMsgReceived;
+        double dt = (currentMessageTime - mLastMessageTime).nanoseconds();
 
-            double leftVelocityInRadiansPerSecond = msg->velocity.at(0);
-            double rightVelocityInRadiansPerSecond = msg->velocity.at(1);
+        double leftVelocityInRadiansPerSecond = msg->velocity.at(0);
+        double rightVelocityInRadiansPerSecond = msg->velocity.at(1);
 
-            double leftVelocityInMetersPerSecond = leftVelocityInRadiansPerSecond * 0.07;
-            double rightVelocityInMetersPerSecond = rightVelocityInRadiansPerSecond * 0.07;
+        double leftVelocityInMetersPerSecond = leftVelocityInRadiansPerSecond * 0.07;
+        double rightVelocityInMetersPerSecond = rightVelocityInRadiansPerSecond * 0.07;
 
-            double vX = (rightVelocityInMetersPerSecond + leftVelocityInMetersPerSecond) / 2.0;
-            double vY = 0.0;
-            double vTh = (rightVelocityInMetersPerSecond - leftVelocityInMetersPerSecond) / 0.26;
+        double vX = (rightVelocityInMetersPerSecond + leftVelocityInMetersPerSecond) / 2.0;
+        double vY = 0.0;
+        double vTh = (rightVelocityInMetersPerSecond - leftVelocityInMetersPerSecond) / 0.26;
 
-            double deltaX = (vX * cos(mOdomTh) - vY * sin(mOdomTh)) * dt;
-            double deltaY = (vX * sin(mOdomTh) + vY * cos(mOdomTh)) * dt;
-            double deltaTh = vTh * dt;
+        double deltaX = (vX * cos(mOdomTh) - vY * sin(mOdomTh)) * dt;
+        double deltaY = (vX * sin(mOdomTh) + vY * cos(mOdomTh)) * dt;
+        double deltaTh = vTh * dt;
 
-            mOdomX += deltaX;
-            mOdomY += deltaY;
-            mOdomTh += deltaTh;
+        mOdomX += deltaX;
+        mOdomY += deltaY;
+        mOdomTh += deltaTh;
 
-            // Shouldn't need to send this if we're using Robot Localization and EKF
-            /*static tf2_ros::TransformBroadcaster transformBroadcaster(this);
+        tf2::Quaternion q;
+        q.setRPY(0, 0, mOdomTh);
+
+        // Shouldn't need to send this if we're using Robot Localization and EKF
+        /*static tf2_ros::TransformBroadcaster transformBroadcaster(this);
 
             geometry_msgs::msg::TransformStamped odomTransformMsg;
         
@@ -60,48 +60,45 @@ private:
 
             odomTransformMsg.transform.translation.x = mOdomX;
             odomTransformMsg.transform.translation.y = mOdomY;
-            odomTransformMsg.transform.translation.z = 0.0;*/
+            odomTransformMsg.transform.translation.z = 0.0;
 
-            tf2::Quaternion q;
-            q.setRPY(0, 0, mOdomTh);
-            /*odomTransformMsg.transform.rotation.x = q.x();
+            odomTransformMsg.transform.rotation.x = q.x();
             odomTransformMsg.transform.rotation.y = q.y();
             odomTransformMsg.transform.rotation.z = q.z();
             odomTransformMsg.transform.rotation.w = q.w();
 
             transformBroadcaster.sendTransform(odomTransformMsg); */
 
-            nav_msgs::msg::Odometry odomMsg;
-            odomMsg.header.stamp = this->now();
-            odomMsg.header.frame_id = "odom";
-            odomMsg.child_frame_id = "base_link";
+        nav_msgs::msg::Odometry odomMsg;
+        odomMsg.header.stamp = currentMessageTime;
+        odomMsg.header.frame_id = "odom";
+        odomMsg.child_frame_id = "base_link";
 
-            odomMsg.pose.pose.position.x = mOdomX;
-            odomMsg.pose.pose.position.y = mOdomY;
-            odomMsg.pose.pose.position.z = 0.0;
+        odomMsg.pose.pose.position.x = mOdomX;
+        odomMsg.pose.pose.position.y = mOdomY;
+        odomMsg.pose.pose.position.z = 0.0;
 
-            odomMsg.pose.pose.orientation.x = q.x();
-            odomMsg.pose.pose.orientation.y = q.y();
-            odomMsg.pose.pose.orientation.z = q.z();
-            odomMsg.pose.pose.orientation.w = q.w();
+        odomMsg.pose.pose.orientation.x = q.x();
+        odomMsg.pose.pose.orientation.y = q.y();
+        odomMsg.pose.pose.orientation.z = q.z();
+        odomMsg.pose.pose.orientation.w = q.w();
 
-            odomMsg.twist.twist.linear.x = vX;
-            odomMsg.twist.twist.linear.y = vY;
-            odomMsg.twist.twist.linear.z = 0.0;
-            odomMsg.twist.twist.angular.x = 0.0;
-            odomMsg.twist.twist.angular.y = 0.0;
-            odomMsg.twist.twist.angular.z = vTh;
+        odomMsg.twist.twist.linear.x = vX;
+        odomMsg.twist.twist.linear.y = vY;
+        odomMsg.twist.twist.linear.z = 0.0;
+        odomMsg.twist.twist.angular.x = 0.0;
+        odomMsg.twist.twist.angular.y = 0.0;
+        odomMsg.twist.twist.angular.z = vTh;
 
-            mOdometryPublisher->publish(odomMsg);
-        }
+        mOdometryPublisher->publish(odomMsg);
 
-        mLastTimeJointStateMsgReceived = currentMessageTimeReceived;
+        mLastMessageTime = currentMessageTime;
     }
 
     double mOdomX = 0.0;
     double mOdomY = 0.0;
     double mOdomTh = 0.0;
-    double mLastTimeJointStateMsgReceived = 0.0;
+    rclcpp::Time mLastMessageTime = this->now();
 
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr mOdometryPublisher;
     rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr mJointStatesSubscriber;
