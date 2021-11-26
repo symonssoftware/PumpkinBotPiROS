@@ -270,9 +270,9 @@ class RobotUserInterfaceNode(Node):
         self.userInterface.imuLabel.config(text = "ZAxis: " + format(prettyYawZ, '.2f'))
 
         if ((prettyYawZ - self.lastZAxisValue) > 0.0):
-            self.userInterface.updateImageForTurningLeft()
-        elif ((prettyYawZ - self.lastZAxisValue) < 0.0):
             self.userInterface.updateImageForTurningRight()
+        elif ((prettyYawZ - self.lastZAxisValue) < 0.0):
+            self.userInterface.updateImageForTurningLeft()
         else:
             self.userInterface.updateImageForGoingStraight()
 
