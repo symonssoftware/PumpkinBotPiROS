@@ -12,9 +12,9 @@ class OdometryNode : public rclcpp::Node
 public:
     OdometryNode() : Node("odometry") 
     {
-        mOdometryPublisher = this->create_publisher<nav_msgs::msg::Odometry>("/wheel/odometry", 100);
+        mOdometryPublisher = this->create_publisher<nav_msgs::msg::Odometry>("/wheel/odometry", 10);
         mJointStatesSubscriber = this->create_subscription<sensor_msgs::msg::JointState>(
-            "/joint_states", 100, 
+            "/joint_states", 10, 
             std::bind(&OdometryNode::callbackJointStates, this, std::placeholders::_1));
 
         RCLCPP_INFO(this->get_logger(), "Odometry Node has been started."); 
