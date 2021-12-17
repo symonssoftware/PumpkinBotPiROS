@@ -14,15 +14,18 @@ import time
 import subprocess
 import psutil
 from tkinter import Canvas, Frame, IntVar, PhotoImage, Radiobutton, messagebox
+from example_interfaces.srv import SetBool
+from functools import partial
 
 #------------------------------------------------------------
 # class RobotUserInterface
 #------------------------------------------------------------
 class RobotUserInterface(tk.Tk):
 
-    def __init__(self, robotState):
+    def __init__(self, node):
         super().__init__()
-        self.setRobotState(robotState)
+        self.uiNode = node
+        self.setRobotState(self.uiNode.robotState)
 
         self.lidarDemoStarted = False
         self.lastZAxisValue = 0.0
@@ -102,12 +105,6 @@ class RobotUserInterface(tk.Tk):
         initMicroROSThread = threading.Thread(target=self.initMicroROS)
         initMicroROSThread.start()
 
-        initSlamThread = threading.Thread(target=self.startSLAM)
-        initSlamThread.start()
-
-        initNavigationThread = threading.Thread(target=self.startNavigation)
-        initNavigationThread.start()
-
     def getRobotState(self):
         return self._robotState
 
@@ -142,20 +139,7 @@ class RobotUserInterface(tk.Tk):
         self.startAgent()
         self.statusLabel.config(text="Status: Powering on Teensy board...")
         self.powerOnTeensy()
-        self.statusLabel.config(text="Status: Initialization complete!")
-        time.sleep(3)
-
-    def startNavigation(self):
-        #self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "bringup_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/nav2_params.yaml", "map:=/home/ubuntu/bonus_room.yaml"])
-        self.navigationProcess = subprocess.Popen(["ros2", "launch", "nav2_bringup", "navigation_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/nav2_params.yaml"])
-        time.sleep(1)
-
-    def startSLAM(self):
-        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "offline_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_offline.yaml"])
-        self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_async_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_async.yaml"])
-        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_sync_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_sync.yaml"])
-        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "localization_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_localization.yaml"])
-        time.sleep(1)
+        self.setPi2EnableFlag(True)
 
     def startLidarDemoButtonCallback(self):
         self.lidarDemoStarted = True
@@ -169,19 +153,10 @@ class RobotUserInterface(tk.Tk):
             self.pumpkinImg = PhotoImage(file='/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/launch/pumpkin_dead.png')
             self.pumpkinCanvas.itemconfig(self.pumpkinImageID, image=self.pumpkinImg)
 
-            self.statusLabel.config(text="Status: Quitting application...")
-    
-            # Try to kill the SLAM process so the node doesn't stick around
-            slamProcess = psutil.Process(self.slamProcess.pid)
-            for proc in slamProcess.children(recursive=True):
-                proc.kill()
-            slamProcess.kill()
-
-            # Try to kill the Navigation process so the node doesn't stick around
-            navigationProcess = psutil.Process(self.navigationProcess.pid)
-            for proc in navigationProcess.children(recursive=True):
-                proc.kill()
-            navigationProcess.kill()
+            self.statusLabel.config(text="Status: Shutting Down Pi2...")
+            self.setPi2EnableFlag(False)
+            time.sleep(3)
+            self.statusLabel.config(text="Status: Quitting Application...")
 
             # Try to kill the microROS agent so the node doesn't stick around
             microROSProcess = psutil.Process(self.microROSAgentProcess.pid)
@@ -211,6 +186,31 @@ class RobotUserInterface(tk.Tk):
     def startMainLoop(self):
         self.mainloop()
 
+    def setPi2EnableFlag(self, enableFlag):
+        client = self.uiNode.create_client(SetBool, "set_pi2_enable_flag")
+        while not client.wait_for_service(1.0):
+            self.statusLabel.config(text="Status: Waiting for Pi2 Server...")
+
+        request = SetBool.Request()
+        request.data = enableFlag
+
+        future = client.call_async(request)
+        future.add_done_callback(partial(self.callbackFromPi2Server, enableFlag=enableFlag))
+
+    def callbackFromPi2Server(self, future, enableFlag):
+        try:
+            response = future.result()
+
+            if ((enableFlag == True) and (response.success == True)):
+                self.statusLabel.config(text="Status: Pi2 Initialization Complete")
+            elif ((enableFlag == False) and (response.success == True)):
+                self.statusLabel.config(text="Status: Pi2 Shutdown Initiated...")
+            else:
+                self.uiNode.get_logger().error("Error response from Pi2 Server")
+        except Exception as e:
+            self.uiNode.get_logger().error("Service called failed %r" % (e,))
+            
+
 #------------------------------------------------------------
 # class RobotUserInterfaceNode
 #------------------------------------------------------------
@@ -238,7 +238,7 @@ class RobotUserInterfaceNode(Node):
         # The (1.0 / frequency) will give you the 'period' in seconds to publish the data
         self.robotStateTimer = self.create_timer(1.0 / self.robotStatePublishFrequency, self.publishRobotState)
 
-        self.userInterface = RobotUserInterface(self.robotState)
+        self.userInterface = RobotUserInterface(self)
 
         spinningThread = threading.Thread(target=self.startSpinning)
         spinningThread.start()
