@@ -21,7 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             "robot_ui = pumpkin_py_pkg.robot_ui:main",
-            "pi2 = pumpkin_py_pkg.pi2_ui:main"
+            "pi2_ui = pumpkin_py_pkg.pi2_ui:main"
         ],
     },
 )
