@@ -14,6 +14,13 @@ import numpy as np
 from std_srvs.srv import SetBool
 from PIL import Image, ImageTk
 
+# SSD CNN Constants
+# we are not going to bother with objects less than 50% probability
+THRESHOLD = 0.5
+# the lower the value: the fewer bounding boxes will remain
+SUPPRESSION_THRESHOLD = 0.3
+SSD_INPUT_SIZE = 320
+
 #------------------------------------------------------------
 # class Pi2UI
 #------------------------------------------------------------
@@ -53,13 +60,17 @@ class Pi2UI(tk.Tk):
         rightFrame.pack_propagate(0)
         rightFrame.grid(row=0, column=2, pady=(10,10))
 
+        self.laneDetectionButton = tk.Button(leftFrame, text = "Lane Detection", takefocus=0, width=100, 
+                command=self.laneDetectionButtonPressed)
+        self.laneDetectionButton.pack(anchor="center", padx=(10,10), pady=(10,10))
+
         self.faceDetectionButton = tk.Button(leftFrame, text = "Face Detection", takefocus=0, width=100, 
                 command=self.faceDetectionButtonPressed)
         self.faceDetectionButton.pack(anchor="center", padx=(10,10), pady=(10,10))
 
-        self.laneDetectionButton = tk.Button(leftFrame, text = "Lane Detection", takefocus=0, width=100, 
-                command=self.laneDetectionButtonPressed)
-        self.laneDetectionButton.pack(anchor="center", padx=(10,10), pady=(10,10))
+        self.ssdCNNButton = tk.Button(leftFrame, text = "SSD CNN", takefocus=0, width=100, 
+                command=self.ssdCNNButtonPressed)
+        self.ssdCNNButton.pack(anchor="center", padx=(10,10), pady=(10,10))
 
         quitButton = tk.Button(leftFrame, text = "Quit", takefocus=0, width=100, command=self.quitButtonCallback)
         quitButton.pack(anchor="center", padx=(10,10), pady=(10,10))
@@ -72,10 +83,12 @@ class Pi2UI(tk.Tk):
         self.startedSLAM = False
         self.startedLaneDetection = False
         self.startedFaceDetection = False
+        self.startedSSDCNN = False
 
         self.videoCapture = cv2.VideoCapture(0)
         self.laneDetectionImage = self.videoCapture.read()
         self.faceDetectionImage = self.videoCapture.read()
+        self.ssdCNNImage = self.videoCapture.read()
 
         # setting the width and height of the video window
         self.videoCapture.set(3, 640)
@@ -85,6 +98,19 @@ class Pi2UI(tk.Tk):
 
         self.openCVCanvas = Canvas(self, width=600, height=600, takefocus=0)  
         self.openCVCanvas.grid(row=0, column=1, pady=(10,0))
+
+        self.neural_network = cv2.dnn_DetectionModel('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/ssd_weights.pb', 
+            '/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/ssd_mobilenet_coco_cfg.pbtxt')
+        # define whether we run the algorithm with CPU or with GPU
+        # WE ARE GOING TO USE CPU !!!
+        self.neural_network.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
+        self.neural_network.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+        self.neural_network.setInputSize(SSD_INPUT_SIZE, SSD_INPUT_SIZE)
+        self.neural_network.setInputScale(1.0/127.5)
+        self.neural_network.setInputMean((127.5, 127.5, 127.5))
+        self.neural_network.setInputSwapRB(True)
+
+        self.class_names = self.construct_class_names()
         
     def startNavigation(self):
         self.startedNavigation = True
@@ -119,9 +145,8 @@ class Pi2UI(tk.Tk):
                     proc.kill()
                 navigationProcess.kill()
 
-            if self.startedLaneDetection:
-                self.videoCapture.release()
-                cv2.destroyAllWindows()
+            self.videoCapture.release()
+            cv2.destroyAllWindows()
 
             self.destroy()  
 
@@ -156,6 +181,9 @@ class Pi2UI(tk.Tk):
     def startMainLoop(self):
         self.mainloop() 
 
+    #------------------------------------------------------------
+    # Lane Detection Methods
+    #------------------------------------------------------------
 
     def draw_the_lines(self, image, lines):
         # create a distinct image for the lines [0,255] - all 0 values means black image
@@ -243,6 +271,9 @@ class Pi2UI(tk.Tk):
             self.laneDetectionButton['text'] = 'Lane Detection*'
             self.startLaneDetection()
 
+    #------------------------------------------------------------
+    # Face Detection Methods
+    #------------------------------------------------------------
 
     def get_detected_faces(self, image):
         
@@ -289,6 +320,56 @@ class Pi2UI(tk.Tk):
             self.faceDetectionButton['text'] = 'Face Detection*'
             self.startFaceDetection()
 
+    #------------------------------------------------------------
+    # SSD CNN Methods
+    #------------------------------------------------------------
+
+    def construct_class_names(self, file_name='/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/class_names'):
+        with open(file_name, 'rt') as file:
+            names = file.read().rstrip('\n').split('\n')
+
+        return names
+
+
+    def show_detected_objects(self, img, boxes_to_keep, all_bounding_boxes, object_names, class_ids):
+        for index in boxes_to_keep:
+            box = all_bounding_boxes[index[0]]
+            x, y, w, h = box[0], box[1], box[2], box[3]
+        cv2.rectangle(img, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2)
+        cv2.putText(img, object_names[class_ids[index[0]][0] - 1].upper(), (box[0], box[1] - 10),
+                    cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.7, (0, 255, 0), 1)
+
+    def startSSDCNN(self):
+
+        _, self.ssdCNNImage = self.videoCapture.read()
+        class_label_ids, confidences, bbox = self.neural_network.detect(self.ssdCNNImage)
+        bbox = list(bbox)
+        confidences = np.array(confidences).reshape(1, -1).tolist()
+
+        # these are the indexes of the bounding boxes we have to keep
+        box_to_keep = cv2.dnn.NMSBoxes(bbox, confidences, THRESHOLD, SUPPRESSION_THRESHOLD)
+ 
+        self.show_detected_objects(self.ssdCNNImage, box_to_keep, bbox, self.class_names, class_label_ids)
+
+        self.ssdCNNImage = cv2.cvtColor(self.ssdCNNImage, cv2.COLOR_BGR2RGB)
+        self.ssdCNNImage = Image.fromarray(self.ssdCNNImage) # to PIL format
+        self.ssdCNNImage = ImageTk.PhotoImage(self.ssdCNNImage) # to ImageTk format
+        # Update image
+        self.openCVCanvas.create_image(0, 0, anchor=tk.NW, image=self.ssdCNNImage)
+        # Repeat every 'interval' ms
+        self.ssdCNNCancelId = self.after(10, self.startSDDCNN)
+
+    def ssdCNNButtonPressed(self):
+        if self.startedSSDCNN:
+            self.startedSSDCNN = False
+            self.ssdCNNButton['text'] = 'SSD CNN'
+            self.openCVCanvas.delete("all")
+            self.after_cancel(self.ssdCNNCancelId)
+        elif not self.startedLaneDetection:
+            self.openCVCanvas.delete("all")
+            self.startedSSDCNN = True
+            self.ssdCNNButton['text'] = 'SSD CNN*'
+            self.startSSDCNN()
 
 #------------------------------------------------------------
 # class Pi2UserInterfaceNode
