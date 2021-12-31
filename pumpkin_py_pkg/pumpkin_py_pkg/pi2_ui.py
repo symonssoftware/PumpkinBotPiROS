@@ -9,17 +9,17 @@ import time
 import subprocess
 import psutil
 from tkinter import Canvas, Frame, IntVar, messagebox
-import cv2
 import numpy as np
+import cv2
 from std_srvs.srv import SetBool
 from PIL import Image, ImageTk
 
 # SSD CNN Constants
-# we are not going to bother with objects less than 50% probability
-THRESHOLD = 0.5
-# the lower the value: the fewer bounding boxes will remain
-SUPPRESSION_THRESHOLD = 0.3
 SSD_INPUT_SIZE = 320
+
+RESIZED_DIMENSIONS = (300, 300) # Dimensions that SSD was trained on. 
+IMG_NORM_RATIO = 0.007843 # In grayscale a pixel can range between 0 and 255
+ 
 
 #------------------------------------------------------------
 # class Pi2UI
@@ -85,6 +85,10 @@ class Pi2UI(tk.Tk):
         self.startedFaceDetection = False
         self.startedSSDCNN = False
 
+        self.laneDetectionCancelId = 0
+        self.faceDetectionCancelId = 0
+        self.ssdCNNCancelId = 0
+
         self.videoCapture = cv2.VideoCapture(0)
         self.laneDetectionImage = self.videoCapture.read()
         self.faceDetectionImage = self.videoCapture.read()
@@ -99,18 +103,26 @@ class Pi2UI(tk.Tk):
         self.openCVCanvas = Canvas(self, width=600, height=600, takefocus=0)  
         self.openCVCanvas.grid(row=0, column=1, pady=(10,0))
 
-        self.neural_network = cv2.dnn_DetectionModel('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/ssd_weights.pb', 
-            '/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/ssd_mobilenet_coco_cfg.pbtxt')
-        # define whether we run the algorithm with CPU or with GPU
-        # WE ARE GOING TO USE CPU !!!
-        self.neural_network.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
-        self.neural_network.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-        self.neural_network.setInputSize(SSD_INPUT_SIZE, SSD_INPUT_SIZE)
-        self.neural_network.setInputScale(1.0/127.5)
-        self.neural_network.setInputMean((127.5, 127.5, 127.5))
-        self.neural_network.setInputSwapRB(True)
-
-        self.class_names = self.construct_class_names()
+        # Load the pre-trained neural network
+        self.neural_network = cv2.dnn.readNetFromCaffe('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/MobileNetSSD_deploy.prototxt.txt', 
+        '/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/MobileNetSSD_deploy.caffemodel')
+ 
+        # List of categories and classes
+        self.categories = { 0: 'background', 1: 'aeroplane', 2: 'bicycle', 3: 'bird', 
+               4: 'boat', 5: 'bottle', 6: 'bus', 7: 'car', 8: 'cat', 
+               9: 'chair', 10: 'cow', 11: 'diningtable', 12: 'dog', 
+              13: 'horse', 14: 'motorbike', 15: 'person', 
+              16: 'pottedplant', 17: 'sheep', 18: 'sofa', 
+              19: 'train', 20: 'tvmonitor'}
+ 
+        self.classes = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", 
+            "bus", "car", "cat", "chair", "cow", 
+           "diningtable",  "dog", "horse", "motorbike", "person", 
+           "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
+                      
+        # Create the bounding boxes
+        self.bbox_colors = np.random.uniform(255, 0, size=(len(self.categories), 3))
+     
         
     def startNavigation(self):
         self.startedNavigation = True
@@ -324,40 +336,62 @@ class Pi2UI(tk.Tk):
     # SSD CNN Methods
     #------------------------------------------------------------
 
-    def construct_class_names(self, file_name='/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/class_names'):
-        with open(file_name, 'rt') as file:
-            names = file.read().rstrip('\n').split('\n')
-
-        return names
-
-
-    def show_detected_objects(self, img, boxes_to_keep, all_bounding_boxes, object_names, class_ids):
-        for index in boxes_to_keep:
-            box = all_bounding_boxes[index[0]]
-            x, y, w, h = box[0], box[1], box[2], box[3]
-        cv2.rectangle(img, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=2)
-        cv2.putText(img, object_names[class_ids[index[0]][0] - 1].upper(), (box[0], box[1] - 10),
-                    cv2.FONT_HERSHEY_COMPLEX_SMALL, 0.7, (0, 255, 0), 1)
-
     def startSSDCNN(self):
 
         _, self.ssdCNNImage = self.videoCapture.read()
-        class_label_ids, confidences, bbox = self.neural_network.detect(self.ssdCNNImage)
-        bbox = list(bbox)
-        confidences = np.array(confidences).reshape(1, -1).tolist()
+        (h, w) = (self.ssdCNNImage.shape[0], self.ssdCNNImage.shape[1])
 
-        # these are the indexes of the bounding boxes we have to keep
-        box_to_keep = cv2.dnn.NMSBoxes(bbox, confidences, THRESHOLD, SUPPRESSION_THRESHOLD)
+        # Create a blob. A blob is a group of connected pixels in a binary 
+        # frame that share some common property (e.g. grayscale value)
+        # Preprocess the frame to prepare it for deep learning classification
+        frame_blob = cv2.dnn.blobFromImage(cv2.resize(self.ssdCNNImage, RESIZED_DIMENSIONS), 
+                     IMG_NORM_RATIO, RESIZED_DIMENSIONS, 127.5)
+     
+        # Set the input for the neural network
+        self.neural_network.setInput(frame_blob)
  
-        self.show_detected_objects(self.ssdCNNImage, box_to_keep, bbox, self.class_names, class_label_ids)
+        # Predict the objects in the image
+        neural_network_output = self.neural_network.forward()
+ 
+        # Put the bounding boxes around the detected objects
+        for i in np.arange(0, neural_network_output.shape[2]):
+             
+            confidence = neural_network_output[0, 0, i, 2]
+     
+            # Confidence must be at least 30%       
+            if confidence > 0.30:
+                 
+                idx = int(neural_network_output[0, 0, i, 1])
+ 
+                bounding_box = neural_network_output[0, 0, i, 3:7] * np.array(
+                    [w, h, w, h])
+ 
+                (startX, startY, endX, endY) = bounding_box.astype("int")
+ 
+                label = "{}: {:.2f}%".format(self.classes[idx], confidence * 100) 
+         
+                cv2.rectangle(self.ssdCNNImage, (startX, startY), (
+                    endX, endY), self.bbox_colors[idx], 2)     
+                         
+                y = startY - 15 if startY - 15 > 15 else startY + 15    
+ 
+                cv2.putText(self.ssdCNNImage, label, (startX, y),cv2.FONT_HERSHEY_SIMPLEX, 
+                    0.5, self.bbox_colors[idx], 2)
+         
+        # We now need to resize the frame so its dimensions
+        # are equivalent to the dimensions of the original frame
+        #frame = cv2.resize(self.ssdCNNImage, file_size, interpolation=cv2.INTER_NEAREST)
+ 
 
         self.ssdCNNImage = cv2.cvtColor(self.ssdCNNImage, cv2.COLOR_BGR2RGB)
         self.ssdCNNImage = Image.fromarray(self.ssdCNNImage) # to PIL format
         self.ssdCNNImage = ImageTk.PhotoImage(self.ssdCNNImage) # to ImageTk format
+
         # Update image
         self.openCVCanvas.create_image(0, 0, anchor=tk.NW, image=self.ssdCNNImage)
+
         # Repeat every 'interval' ms
-        self.ssdCNNCancelId = self.after(10, self.startSDDCNN)
+        self.ssdCNNCancelId = self.after(10, self.startSSDCNN)
 
     def ssdCNNButtonPressed(self):
         if self.startedSSDCNN:
