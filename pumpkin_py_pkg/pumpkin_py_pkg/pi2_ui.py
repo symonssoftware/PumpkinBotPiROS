@@ -11,7 +11,7 @@ import psutil
 from tkinter import Canvas, Frame, IntVar, messagebox
 import numpy as np
 import cv2
-from std_srvs.srv import SetBool
+from example_interfaces.srv import SetBool
 from PIL import Image, ImageTk
 
 # SSD CNN Constants
