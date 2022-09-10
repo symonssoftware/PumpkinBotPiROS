@@ -1,0 +1,4 @@
+[console_scripts]
+pi2_ui = pumpkin_py_pkg.pi2_ui:main
+robot_ui = pumpkin_py_pkg.robot_ui:main
+

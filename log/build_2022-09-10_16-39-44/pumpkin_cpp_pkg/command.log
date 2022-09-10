@@ -1,0 +1,6 @@
+Invoking command in '/home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake /home/ubuntu/ros2_ws/pumpkin_cpp_pkg -DCMAKE_INSTALL_PREFIX=/home/ubuntu/ros2_ws/install/pumpkin_cpp_pkg
+Invoked command in '/home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake /home/ubuntu/ros2_ws/pumpkin_cpp_pkg -DCMAKE_INSTALL_PREFIX=/home/ubuntu/ros2_ws/install/pumpkin_cpp_pkg
+Invoking command in '/home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake --build /home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg -- -j8 -l8
+Invoked command in '/home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake --build /home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg -- -j8 -l8
+Invoking command in '/home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake --install /home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg
+Invoked command in '/home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) /usr/bin/cmake --install /home/ubuntu/ros2_ws/build/pumpkin_cpp_pkg

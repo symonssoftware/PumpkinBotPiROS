@@ -1,0 +1,47 @@
+[0.653s] Invoking command in '/home/ubuntu/ros2_ws/pumpkin_py_pkg': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/pumpkin_py_pkg build --build-base /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build install --prefix /home/ubuntu/ros2_ws/install/pumpkin_py_pkg --record /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/install.log --single-version-externally-managed
+[0.893s] /usr/lib/python3/dist-packages/setuptools/dist.py:723: UserWarning: Usage of dash-separated 'script-dir' will not be supported in future versions. Please use the underscore name 'script_dir' instead
+[0.893s]   warnings.warn(
+[0.893s] /usr/lib/python3/dist-packages/setuptools/dist.py:723: UserWarning: Usage of dash-separated 'install-scripts' will not be supported in future versions. Please use the underscore name 'install_scripts' instead
+[0.893s]   warnings.warn(
+[0.901s] running egg_info
+[0.901s] creating ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info
+[0.901s] writing ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/PKG-INFO
+[0.902s] writing dependency_links to ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/dependency_links.txt
+[0.902s] writing entry points to ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/entry_points.txt
+[0.902s] writing requirements to ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/requires.txt
+[0.902s] writing top-level names to ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/top_level.txt
+[0.902s] writing manifest file '../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/SOURCES.txt'
+[0.904s] reading manifest file '../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/SOURCES.txt'
+[0.905s] writing manifest file '../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info/SOURCES.txt'
+[0.905s] running build
+[0.905s] running build_py
+[0.905s] creating /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build
+[0.905s] creating /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib
+[0.905s] creating /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg
+[0.905s] copying pumpkin_py_pkg/__init__.py -> /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg
+[0.906s] copying pumpkin_py_pkg/robot_ui.py -> /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg
+[0.906s] copying pumpkin_py_pkg/pi2_ui.py -> /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg
+[0.906s] running install
+[0.906s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.906s]   warnings.warn(
+[0.906s] running install_lib
+[0.907s] creating /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg
+[0.907s] copying /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg/__init__.py -> /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg
+[0.907s] copying /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg/robot_ui.py -> /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg
+[0.908s] copying /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build/lib/pumpkin_py_pkg/pi2_ui.py -> /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg
+[0.908s] byte-compiling /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg/__init__.py to __init__.cpython-310.pyc
+[0.908s] byte-compiling /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg/robot_ui.py to robot_ui.cpython-310.pyc
+[0.910s] byte-compiling /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg/pi2_ui.py to pi2_ui.cpython-310.pyc
+[0.913s] running install_data
+[0.913s] creating /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/share/ament_index
+[0.913s] creating /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/share/ament_index/resource_index
+[0.913s] creating /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/share/ament_index/resource_index/packages
+[0.914s] copying resource/pumpkin_py_pkg -> /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/share/ament_index/resource_index/packages
+[0.914s] copying package.xml -> /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/share/pumpkin_py_pkg
+[0.914s] running install_egg_info
+[0.915s] Copying ../build/pumpkin_py_pkg/pumpkin_py_pkg.egg-info to /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages/pumpkin_py_pkg-0.0.0-py3.10.egg-info
+[0.915s] running install_scripts
+[0.934s] Installing pi2_ui script to /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/pumpkin_py_pkg
+[0.935s] Installing robot_ui script to /home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/pumpkin_py_pkg
+[0.935s] writing list of installed files to '/home/ubuntu/ros2_ws/build/pumpkin_py_pkg/install.log'
+[0.964s] Invoked command in '/home/ubuntu/ros2_ws/pumpkin_py_pkg' returned '0': CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/home/ubuntu/ros2_ws/install/pumpkin_py_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/pumpkin_py_pkg build --build-base /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/build install --prefix /home/ubuntu/ros2_ws/install/pumpkin_py_pkg --record /home/ubuntu/ros2_ws/build/pumpkin_py_pkg/install.log --single-version-externally-managed
