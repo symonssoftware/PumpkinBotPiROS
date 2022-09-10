@@ -1,0 +1,1 @@
+Need to have this stupid file so that Git keeps the launch directory when a commit is made.
