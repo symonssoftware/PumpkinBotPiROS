@@ -99,9 +99,9 @@ def generate_launch_description():
         pumpkin_clock_node,
 
         launch_ros.actions.Node(
-            package='rplidar_ros2',
-            executable='rplidar_scan_publisher',
-            name='rplidar_scan_publisher',
+            package='rplidar_ros',
+            executable='rplidar_composition',
+            name='rplidar_composition',
             parameters=[{'serial_port': serial_port, 
                          'serial_baudrate': serial_baudrate, 
                          'frame_id': frame_id,
