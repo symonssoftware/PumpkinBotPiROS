@@ -9,7 +9,7 @@
         "/home/ubuntu/ros2_ws/install/my_py_pkg/lib/python3.8/site-packages",
         "/home/ubuntu/ros2_ws/install/my_robot_interfaces/lib/python3.8/site-packages",
         "/home/ubuntu/microros_ws/install/micro_ros_msgs/lib/python3.8/site-packages",
-        "/opt/ros/foxy/lib/python3.8/site-packages"
+        "/opt/ros/humble/lib/python3.8/site-packages"
     ],
     "cmake.sourceDirectory": "${workspaceFolder}/my_cpp_pkg",
     "C_Cpp.errorSquiggles": "Enabled",
@@ -18,6 +18,6 @@
         "/home/ubuntu/ros2_ws/install/my_py_pkg/lib/python3.8/site-packages",
         "/home/ubuntu/ros2_ws/install/my_robot_interfaces/lib/python3.8/site-packages",
         "/home/ubuntu/microros_ws/install/micro_ros_msgs/lib/python3.8/site-packages",
-        "/opt/ros/foxy/lib/python3.8/site-packages"
+        "/opt/ros/humble/lib/python3.8/site-packages"
     ]
 }
