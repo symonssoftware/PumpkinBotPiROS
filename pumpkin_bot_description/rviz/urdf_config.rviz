@@ -7,7 +7,7 @@ Panels:
         - /Global Options1
         - /LaserScan1/Topic1
       Splitter Ratio: 0.5
-    Tree Height: 419
+    Tree Height: 289
   - Class: nav2_rviz_plugins/Navigation 2
     Name: Navigation 2
 Visualization Manager:
@@ -83,6 +83,9 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+      Mass Properties:
+        Inertia: false
+        Mass: false
       Name: RobotModel
       TF Prefix: ""
       Update Interval: 0
@@ -117,22 +120,20 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_link:
-          base_footprint:
-            {}
-          drivewhl_l_link:
-            {}
-          drivewhl_r_link:
-            {}
-          imu_link:
-            {}
-          laser:
-            {}
-          rear_caster:
-            {}
         map:
           odom:
-            {}
+            base_footprint:
+              base_link:
+                drivewhl_l_link:
+                  {}
+                drivewhl_r_link:
+                  {}
+                imu_link:
+                  {}
+                laser:
+                  {}
+                rear_caster:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -162,6 +163,7 @@ Visualization Manager:
       Topic:
         Depth: 5
         Durability Policy: Volatile
+        Filter size: 10
         History Policy: Keep Last
         Reliability Policy: System Default
         Value: /scan
@@ -177,6 +179,7 @@ Visualization Manager:
       Topic:
         Depth: 5
         Durability Policy: Volatile
+        Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /global_costmap/costmap
@@ -222,6 +225,7 @@ Visualization Manager:
       Topic:
         Depth: 5
         Durability Policy: Volatile
+        Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /odometry/filtered
@@ -229,7 +233,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: map
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -241,6 +245,9 @@ Visualization Manager:
     - Class: rviz_default_plugins/Measure
       Line color: 128; 128; 0
     - Class: rviz_default_plugins/SetInitialPose
+      Covariance x: 0.25
+      Covariance y: 0.25
+      Covariance yaw: 0.06853891909122467
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -290,7 +297,7 @@ Window Geometry:
   Hide Right Dock: false
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000023a000002fbfc0200000002fb000000100044006900730070006c006100790073010000003d0000023e000000c900fffffffb00000018004e0061007600690067006100740069006f006e002000320100000281000000b7000000b700ffffff00000367000002fb00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000001000000000000023a000002fbfc0200000002fb000000100044006900730070006c006100790073010000003d000001bc000000c900fffffffb00000018004e0061007600690067006100740069006f006e0020003201000001ff000001390000013900ffffff00000367000002fb00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1447
-  X: 72
-  Y: 30
+  X: 685
+  Y: 465
