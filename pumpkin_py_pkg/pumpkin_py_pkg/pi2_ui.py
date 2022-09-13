@@ -132,8 +132,8 @@ class Pi2UI(tk.Tk):
 
     def startSLAM(self):
         self.startedSLAM = True
-        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "offline_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_offline.yaml"])
-        self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_async_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_async.yaml"])
+        self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "offline_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_offline.yaml"])
+        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_async_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_async.yaml"])
         #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_sync_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_sync.yaml"])
         #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "localization_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_localization.yaml"])
         time.sleep(1)
