@@ -1,7 +1,7 @@
 # PumpkinBotPiROS
 ![PumpkinBotPics](https://user-images.githubusercontent.com/56047819/187966727-70f07d94-42d2-40fd-bdd1-099985aebe13.jpg)
 
-> This repo contains the Raspberry Pi code for the PumpkinBot
+> This repo contains the Raspberry Pi and PC ROS code for the PumpkinBot
 
 PumpkinBot Parts List
 * DF Robotics HCR Mobile Robot Platform Chassis
