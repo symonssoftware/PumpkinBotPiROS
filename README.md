@@ -1,5 +1,6 @@
 # PumpkinBotPiROS
-![PumpkinBotPics](https://user-images.githubusercontent.com/56047819/187966727-70f07d94-42d2-40fd-bdd1-099985aebe13.jpg)
+
+![PumpkinBot](https://user-images.githubusercontent.com/56047819/190811296-131d5339-5d87-44ef-b07a-73991533cb08.jpg)
 
 > This repo contains the Raspberry Pi and PC ROS code for the PumpkinBot
 
@@ -16,5 +17,5 @@ PumpkinBot Parts List
 * RaspberryPi 4B 8GB (MicroROS Agent, ROS2 Bringup, LiDAR, Nav2 and SLAM)
 * RaspberryPi 4B 8GB (UI, Computer Vision Applications)
 * Radiolink R8SM 2.4G 8 Channel Receiver (teleoperation)
-* StereoLabs Zed 2i Stereo Camera
+* Logitech C930e USB Webcam
 * 10" Monitor
