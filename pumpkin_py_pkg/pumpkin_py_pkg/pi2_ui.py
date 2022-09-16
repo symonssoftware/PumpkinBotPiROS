@@ -89,39 +89,39 @@ class Pi2UI(tk.Tk):
         self.faceDetectionCancelId = 0
         self.ssdCNNCancelId = 0
 
-        self.videoCapture = cv2.VideoCapture(0)
-        self.laneDetectionImage = self.videoCapture.read()
-        self.faceDetectionImage = self.videoCapture.read()
-        self.ssdCNNImage = self.videoCapture.read()
+        # self.videoCapture = cv2.VideoCapture(0)
+        # self.laneDetectionImage = self.videoCapture.read()
+        # self.faceDetectionImage = self.videoCapture.read()
+        # self.ssdCNNImage = self.videoCapture.read()
 
-        # setting the width and height of the video window
-        self.videoCapture.set(3, 640)
-        self.videoCapture.set(4, 480)
+        # # setting the width and height of the video window
+        # self.videoCapture.set(3, 640)
+        # self.videoCapture.set(4, 480)
 
-        self.cascade_classifier = cv2.CascadeClassifier('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/haarcascade_frontalface_alt.xml')
+        # self.cascade_classifier = cv2.CascadeClassifier('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/haarcascade_frontalface_alt.xml')
 
-        self.openCVCanvas = Canvas(self, width=600, height=600, takefocus=0)  
-        self.openCVCanvas.grid(row=0, column=1, pady=(10,0))
+        # self.openCVCanvas = Canvas(self, width=600, height=600, takefocus=0)  
+        # self.openCVCanvas.grid(row=0, column=1, pady=(10,0))
 
-        # Load the pre-trained neural network
-        self.neural_network = cv2.dnn.readNetFromCaffe('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/MobileNetSSD_deploy.prototxt.txt', 
-        '/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/MobileNetSSD_deploy.caffemodel')
+        # # Load the pre-trained neural network
+        # self.neural_network = cv2.dnn.readNetFromCaffe('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/MobileNetSSD_deploy.prototxt.txt', 
+        # '/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/MobileNetSSD_deploy.caffemodel')
  
-        # List of categories and classes
-        self.categories = { 0: 'background', 1: 'aeroplane', 2: 'bicycle', 3: 'bird', 
-               4: 'boat', 5: 'bottle', 6: 'bus', 7: 'car', 8: 'cat', 
-               9: 'chair', 10: 'cow', 11: 'diningtable', 12: 'dog', 
-              13: 'horse', 14: 'motorbike', 15: 'person', 
-              16: 'pottedplant', 17: 'sheep', 18: 'sofa', 
-              19: 'train', 20: 'tvmonitor'}
+        # # List of categories and classes
+        # self.categories = { 0: 'background', 1: 'aeroplane', 2: 'bicycle', 3: 'bird', 
+        #        4: 'boat', 5: 'bottle', 6: 'bus', 7: 'car', 8: 'cat', 
+        #        9: 'chair', 10: 'cow', 11: 'diningtable', 12: 'dog', 
+        #       13: 'horse', 14: 'motorbike', 15: 'person', 
+        #       16: 'pottedplant', 17: 'sheep', 18: 'sofa', 
+        #       19: 'train', 20: 'tvmonitor'}
  
-        self.classes = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", 
-            "bus", "car", "cat", "chair", "cow", 
-           "diningtable",  "dog", "horse", "motorbike", "person", 
-           "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
+        # self.classes = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", 
+        #     "bus", "car", "cat", "chair", "cow", 
+        #    "diningtable",  "dog", "horse", "motorbike", "person", 
+        #    "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
                       
-        # Create the bounding boxes
-        self.bbox_colors = np.random.uniform(255, 0, size=(len(self.categories), 3))
+        # # Create the bounding boxes
+        # self.bbox_colors = np.random.uniform(255, 0, size=(len(self.categories), 3))
      
         
     def startNavigation(self):
@@ -132,8 +132,8 @@ class Pi2UI(tk.Tk):
 
     def startSLAM(self):
         self.startedSLAM = True
-        self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "offline_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_offline.yaml"])
-        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_async_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_async.yaml"])
+        #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "offline_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_offline.yaml"])
+        self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_async_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_async.yaml"])
         #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "online_sync_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_online_sync.yaml"])
         #self.slamProcess = subprocess.Popen(["ros2", "launch", "slam_toolbox", "localization_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/slam_toolbox_mapper_params_localization.yaml"])
         time.sleep(1)
@@ -157,7 +157,7 @@ class Pi2UI(tk.Tk):
                     proc.kill()
                 navigationProcess.kill()
 
-            self.videoCapture.release()
+            # self.videoCapture.release()
             cv2.destroyAllWindows()
 
             self.destroy()  
