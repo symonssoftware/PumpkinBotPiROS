@@ -88,7 +88,7 @@ class DesktopUI(tk.Tk):
         self.started_slam = False
         self.started_lane_detection = False
         self.started_face_detection = False
-        self.started_ssd_dnn = False
+        self.started_ssd_cnn = False
 
         self.lane_detection_cancel_id = 0
         self.face_detection_cancel_id = 0
@@ -125,17 +125,17 @@ class DesktopUI(tk.Tk):
         # Create the bounding boxes
         self.bbox_colors = np.random.uniform(255, 0, size=(len(self.categories), 3))
 
-        self.update_canvas()
+    #     self.update_canvas()
    
-    def update_canvas(self):
+    # def update_canvas(self):
 
-        self.status_label.config(text="Status: Processing video...")
+    #     self.status_label.config(text="Status: Processing video...")
 
-        self.current_frame = cv2.cvtColor(self.ros_frame, cv2.COLOR_BGR2RGB)
-        self.current_frame = ImageTk.PhotoImage(Image.fromarray(self.current_frame))
-        self.open_cv_canvas.create_image(0, 0, image = self.current_frame, anchor = tk.NW)
+    #     self.current_frame = cv2.cvtColor(self.ros_frame, cv2.COLOR_BGR2RGB)
+    #     self.current_frame = ImageTk.PhotoImage(Image.fromarray(self.current_frame))
+    #     self.open_cv_canvas.create_image(0, 0, image = self.current_frame, anchor = tk.NW)
 
-        self.after(10, self.update_canvas)
+    #     self.after(10, self.update_canvas)
  
     def start_navigation(self):
         self.started_navigation = True
@@ -303,7 +303,7 @@ class DesktopUI(tk.Tk):
 
     def get_detected_faces(self, image):
         
-        _, image = self.current_frame
+        image = self.ros_frame
 
         (height, width) = (image.shape[0], image.shape[1])
 
@@ -350,15 +350,16 @@ class DesktopUI(tk.Tk):
     # SSD CNN Methods
     #------------------------------------------------------------
 
-    def start_ssd_dnn(self):
+    def start_ssd_cnn(self):
 
-        _, self.ssdCNNImage = self.current_frame
-        (h, w) = (self.ssdCNNImage.shape[0], self.ssdCNNImage.shape[1])
+        self.ssd_cnn_image = self.ros_frame
+
+        (h, w) = (self.ssd_cnn_image.shape[0], self.ssd_cnn_image.shape[1])
 
         # Create a blob. A blob is a group of connected pixels in a binary 
         # frame that share some common property (e.g. grayscale value)
         # Preprocess the frame to prepare it for deep learning classification
-        frame_blob = cv2.dnn.blobFromImage(cv2.resize(self.ssdCNNImage, RESIZED_DIMENSIONS), 
+        frame_blob = cv2.dnn.blobFromImage(cv2.resize(self.ssd_cnn_image, RESIZED_DIMENSIONS), 
                      IMG_NORM_RATIO, RESIZED_DIMENSIONS, 127.5)
      
         # Set the input for the neural network
@@ -384,12 +385,12 @@ class DesktopUI(tk.Tk):
  
                 label = "{}: {:.2f}%".format(self.classes[idx], confidence * 100) 
          
-                cv2.rectangle(self.ssdCNNImage, (startX, startY), (
+                cv2.rectangle(self.ssd_cnn_image, (startX, startY), (
                     endX, endY), self.bbox_colors[idx], 2)     
                          
                 y = startY - 15 if startY - 15 > 15 else startY + 15    
  
-                cv2.putText(self.ssdCNNImage, label, (startX, y),cv2.FONT_HERSHEY_SIMPLEX, 
+                cv2.putText(self.ssd_cnn_image, label, (startX, y),cv2.FONT_HERSHEY_SIMPLEX, 
                     0.5, self.bbox_colors[idx], 2)
          
         # We now need to resize the frame so its dimensions
@@ -404,19 +405,19 @@ class DesktopUI(tk.Tk):
         self.open_cv_canvas.create_image(0, 0, anchor=tk.NW, image=self.ssd_cnn_image)
 
         # Repeat every 'interval' ms
-        self.ssd_cnn_cancel_id = self.after(10, self.start_ssd_dnn)
+        self.ssd_cnn_cancel_id = self.after(10, self.start_ssd_cnn)
 
     def ssd_cnn_button_pressed(self):
-        if self.startedSSDCNN:
-            self.startedSSDCNN = False
+        if self.started_ssd_cnn:
+            self.started_ssd_cnn = False
             self.ssd_cnn_button['text'] = 'SSD CNN'
             self.open_cv_canvas.delete("all")
             self.after_cancel(self.ssd_cnn_cancel_id)
-        elif not self.startedLaneDetection:
+        elif not self.started_lane_detection:
             self.open_cv_canvas.delete("all")
-            self.startedSSDCNN = True
+            self.started_ssd_cnn = True
             self.ssd_cnn_button['text'] = 'SSD CNN*'
-            self.start_ssd_dnn()
+            self.start_ssd_cnn()
 
 #------------------------------------------------------------
 # class DesktopUserInterfaceNode
