@@ -139,7 +139,9 @@ class RobotUserInterface(tk.Tk):
         self.startAgent()
         self.statusLabel.config(text="Status: Powering on Teensy board...")
         self.powerOnTeensy()
-        self.setPi2EnableFlag(True)
+        #Removing the need for the second Pi for now
+        #self.setPi2EnableFlag(True)
+        self.statusLabel.config(text="Status: Initialization Complete")
 
     def startLidarDemoButtonCallback(self):
         self.lidarDemoStarted = True
@@ -153,9 +155,9 @@ class RobotUserInterface(tk.Tk):
             self.pumpkinImg = PhotoImage(file='/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/launch/pumpkin_dead.png')
             self.pumpkinCanvas.itemconfig(self.pumpkinImageID, image=self.pumpkinImg)
 
-            self.statusLabel.config(text="Status: Shutting Down Pi2...")
-            self.setPi2EnableFlag(False)
-            time.sleep(3)
+            #self.statusLabel.config(text="Status: Shutting Down Pi2...")
+            #self.setPi2EnableFlag(False)
+            #time.sleep(3)
             self.statusLabel.config(text="Status: Quitting Application...")
 
             # Try to kill the microROS agent so the node doesn't stick around
@@ -186,29 +188,29 @@ class RobotUserInterface(tk.Tk):
     def startMainLoop(self):
         self.mainloop()
 
-    def setPi2EnableFlag(self, enableFlag):
-        client = self.uiNode.create_client(SetBool, "set_pi2_enable_flag")
-        while not client.wait_for_service(1.0):
-            self.statusLabel.config(text="Status: Waiting for Pi2 Server...")
+    # def setPi2EnableFlag(self, enableFlag):
+    #     client = self.uiNode.create_client(SetBool, "set_pi2_enable_flag")
+    #     while not client.wait_for_service(1.0):
+    #         self.statusLabel.config(text="Status: Waiting for Pi2 Server...")
 
-        request = SetBool.Request()
-        request.data = enableFlag
+    #     request = SetBool.Request()
+    #     request.data = enableFlag
 
-        future = client.call_async(request)
-        future.add_done_callback(partial(self.callbackFromPi2Server, enableFlag=enableFlag))
+    #     future = client.call_async(request)
+    #     future.add_done_callback(partial(self.callbackFromPi2Server, enableFlag=enableFlag))
 
-    def callbackFromPi2Server(self, future, enableFlag):
-        try:
-            response = future.result()
+    # def callbackFromPi2Server(self, future, enableFlag):
+    #     try:
+    #         response = future.result()
 
-            if ((enableFlag == True) and (response.success == True)):
-                self.statusLabel.config(text="Status: Pi2 Initialization Complete")
-            elif ((enableFlag == False) and (response.success == True)):
-                self.statusLabel.config(text="Status: Pi2 Shutdown Initiated...")
-            else:
-                self.uiNode.get_logger().error("Error response from Pi2 Server")
-        except Exception as e:
-            self.uiNode.get_logger().error("Service called failed %r" % (e,))
+    #         if ((enableFlag == True) and (response.success == True)):
+    #             self.statusLabel.config(text="Status: Pi2 Initialization Complete")
+    #         elif ((enableFlag == False) and (response.success == True)):
+    #             self.statusLabel.config(text="Status: Pi2 Shutdown Initiated...")
+    #         else:
+    #             self.uiNode.get_logger().error("Error response from Pi2 Server")
+    #     except Exception as e:
+    #         self.uiNode.get_logger().error("Service called failed %r" % (e,))
             
 
 #------------------------------------------------------------

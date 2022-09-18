@@ -44,6 +44,16 @@ def generate_launch_description():
         ]
     )
 
+    usb_cam_node = launch_ros.actions.Node(
+        package='image_tools',
+        executable='cam2image',
+        name='cam2image',
+        parameters = [
+            {"width": 640},
+            {"height": 480}
+        ]
+    )
+
     robot_state_publisher_node = launch_ros.actions.Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -113,5 +123,6 @@ def generate_launch_description():
         robot_state_publisher_node,
         robot_localization_node,
         odometry_node,
+        usb_cam_node
         #rviz_node
     ])
