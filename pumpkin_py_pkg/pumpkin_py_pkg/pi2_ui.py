@@ -112,10 +112,6 @@ class Pi2UserInterfaceNode(Node):
 
         self.server = self.create_service(SetBool, "set_pi2_enable_flag", self.callback_set_pi2_enable_flag)
 
-        # Start spinning
-        spinning_thread = threading.Thread(target=self.start_spinning)
-        spinning_thread.start()
-
         # Create the publisher. This publisher will publish an Image
         # to the video_frames topic. The queue size is 10 messages.
         self.video_frames_publisher = self.create_publisher(ROSImage, 'video_frames', 10)
@@ -136,6 +132,10 @@ class Pi2UserInterfaceNode(Node):
 
         # Used to convert between ROS and OpenCV images
         self.cv_bridge = CvBridge()
+
+           # Start spinning
+        spinning_thread = threading.Thread(target=self.start_spinning)
+        spinning_thread.start()
 
         self.user_interface.start_main_loop()
   
