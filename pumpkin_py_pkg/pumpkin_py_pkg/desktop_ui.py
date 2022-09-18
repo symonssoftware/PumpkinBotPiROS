@@ -238,7 +238,7 @@ class DesktopUI(tk.Tk):
 
     def get_detected_lanes(self, image):
 
-        _, image = self.current_frame
+        image = self.ros_frame
 
         (height, width) = (image.shape[0], image.shape[1])
 
