@@ -165,10 +165,10 @@ class Pi2UserInterfaceNode(Node):
 
     def callback_set_pi2_enable_flag(self, request, response):
         if (request.data == True):
-            self.user_interface.startProcesses()
+            self.user_interface.start_processes()
         else:           
             self.video_capture.release()
-            self.user_interface.killProcesses()
+            self.user_interface.kill_processes()
             rclpy.shutdown()
 
         response.success = True
