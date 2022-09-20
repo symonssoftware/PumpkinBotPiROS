@@ -44,13 +44,22 @@ def generate_launch_description():
         ]
     )
 
+    # usb_cam_node = launch_ros.actions.Node(
+    #     package='image_tools',
+    #     executable='cam2image',
+    #     name='cam2image',
+    #     parameters = [
+    #         {"width": 640},
+    #         {"height": 480}
+    #     ]
+    # )
+
     usb_cam_node = launch_ros.actions.Node(
-        package='image_tools',
-        executable='cam2image',
-        name='cam2image',
+        package='usb_cam',
+        executable='usb_cam_node_exe',
+        name='usb_cam_node_exe',
         parameters = [
-            {"width": 640},
-            {"height": 480}
+            {"params-file": '/home/ubuntu/ros2_ws/src/camera_config/ms_lifecam/params.yaml'}
         ]
     )
 
