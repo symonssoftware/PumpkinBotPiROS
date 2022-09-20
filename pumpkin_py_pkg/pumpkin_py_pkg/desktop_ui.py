@@ -131,7 +131,7 @@ class DesktopUI(tk.Tk):
 
     #     self.status_label.config(text="Status: Processing video...")
 
-    #     self.current_frame = cv2.cvtColor(self.ros_frame, cv2.COLOR_BGR2RGB)
+    #     #self.current_frame = cv2.cvtColor(self.ros_frame, cv2.COLOR_BGR2RGB)
     #     self.current_frame = ImageTk.PhotoImage(Image.fromarray(self.current_frame))
     #     self.open_cv_canvas.create_image(0, 0, image = self.current_frame, anchor = tk.NW)
 
@@ -274,7 +274,7 @@ class DesktopUI(tk.Tk):
  
         self.lane_detection_image = self.get_detected_lanes(self.lane_detection_image)
 
-        self.lane_detection_image = cv2.cvtColor(self.lane_detection_image, cv2.COLOR_BGR2RGB)
+        #self.lane_detection_image = cv2.cvtColor(self.lane_detection_image, cv2.COLOR_BGR2RGB)
         self.lane_detection_image = Image.fromarray(self.lane_detection_image) # to PIL format
         self.lane_detection_image = ImageTk.PhotoImage(self.lane_detection_image) # to ImageTk format
 
@@ -325,7 +325,7 @@ class DesktopUI(tk.Tk):
 
         self.face_detection_image = self.get_detected_faces(self.face_detection_image)
 
-        self.face_detection_image = cv2.cvtColor(self.face_detection_image, cv2.COLOR_BGR2RGB)
+        #self.face_detection_image = cv2.cvtColor(self.face_detection_image, cv2.COLOR_BGR2RGB)
         self.face_detection_image = Image.fromarray(self.face_detection_image) # to PIL format
         self.face_detection_image = ImageTk.PhotoImage(self.face_detection_image) # to ImageTk format
         # Update image
@@ -397,7 +397,7 @@ class DesktopUI(tk.Tk):
         # are equivalent to the dimensions of the original frame
         #frame = cv2.resize(self.ssd_cnn_image, file_size, interpolation=cv2.INTER_NEAREST)
  
-        self.ssd_cnn_image = cv2.cvtColor(self.ssd_cnn_image, cv2.COLOR_BGR2RGB)
+        #self.ssd_cnn_image = cv2.cvtColor(self.ssd_cnn_image, cv2.COLOR_BGR2RGB)
         self.ssd_cnn_image = Image.fromarray(self.ssd_cnn_image) # to PIL format
         self.ssd_cnn_image = ImageTk.PhotoImage(self.ssd_cnn_image) # to ImageTk format
 
@@ -433,7 +433,7 @@ class DesktopUserInterfaceNode(Node):
         # from the video_frames topic. The queue size is 10 messages.
         self.video_frames_subscription = self.create_subscription(
             ROSImage, 
-            'image', 
+            'image_raw', 
             self.video_frames_listener_callback, 
             10)
         self.video_frames_subscription # prevent unused variable warning
