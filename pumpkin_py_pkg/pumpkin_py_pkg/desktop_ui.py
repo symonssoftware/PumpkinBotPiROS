@@ -14,6 +14,7 @@ import cv2
 from cv_bridge import CvBridge
 from PIL import Image, ImageTk
 from sensor_msgs.msg import Image as ROSImage
+from apriltag import apriltag
 
 # SSD CNN Constants
 SSD_INPUT_SIZE = 320
@@ -77,6 +78,10 @@ class DesktopUI(tk.Tk):
                 command=self.ssd_cnn_button_pressed)
         self.ssd_cnn_button.pack(anchor="center", padx=(10,10), pady=(10,10))
 
+        self.apriltag_detection_button = tk.Button(left_frame, text = "AprilTag Detection", takefocus=0, width=100, 
+                command=self.apriltag_detection_button_pressed)
+        self.apriltag_detection_button.pack(anchor="center", padx=(10,10), pady=(10,10))
+
         quit_button = tk.Button(left_frame, text = "Quit", takefocus=0, width=100, command=self.quit_button_callback)
         quit_button.pack(anchor="center", padx=(10,10), pady=(10,10))
 
@@ -89,16 +94,19 @@ class DesktopUI(tk.Tk):
         self.started_lane_detection = False
         self.started_face_detection = False
         self.started_ssd_cnn = False
+        self.started_apriltag_detection = False
 
         self.lane_detection_cancel_id = 0
         self.face_detection_cancel_id = 0
         self.ssd_cnn_cancel_id = 0
+        self.apriltag_detection_cancel_id = 0
 
         self.ros_frame = np.zeros((640, 480, 3), np.uint8)
 
         self.lane_detection_image = self.ros_frame
         self.face_detection_image = self.ros_frame
         self.ssd_cnn_image = self.ros_frame
+        self.apriltag_detection_image = self.ros_frame
 
         self.cascade_classifier = cv2.CascadeClassifier('/home/ubuntu/ros2_ws/src/pumpkin_py_pkg/pumpkin_py_pkg/haarcascade_frontalface_alt.xml')
 
@@ -418,6 +426,72 @@ class DesktopUI(tk.Tk):
             self.started_ssd_cnn = True
             self.ssd_cnn_button['text'] = 'SSD CNN*'
             self.start_ssd_cnn()
+
+
+    #------------------------------------------------------------
+    # AprilTag Detection Methods
+    #------------------------------------------------------------
+    def get_detected_apriltags(self, image):
+        
+        image = self.ros_frame
+
+        # # we have to turn the image into grayscale
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        detections = self.apriltag_detector.detect(gray_image)
+
+        # In the apriltag library, in apriltag_pywrap.c, need to comment out lines 243-246 
+        # so that a condition of ‘zero tags detected’ was allowed. Need to rebuild after 
+        # commenting these lines out.
+
+              # From apriltag_pywrap.c (243-246) in the apriltag library:
+              # if (N == 0 && errno == EAGAIN){
+              #     PyErr_Format(PyExc_RuntimeError, "Unable to create %d threads for detector", self->td->nthreads);
+              #     goto done;
+              # }
+
+        print("Saw tags {} at\n{}". \
+          format([d['id']     for d in detections],
+                 np.array([d['center'] for d in detections])))
+
+        for d in detections:
+            lb, rb, rt, lt = d['lb-rb-rt-lt']
+            cv2.rectangle(image, (int(lt[0]), int(lt[1])), (int(rb[0]), int(rb[1])), (0, 0, 255), 1) 
+
+            cX, cY = d['center']
+            cv2.circle(image, (int(cX), int(cY)), 2, (255, 0, 0), -1)   
+
+            cv2.putText(image, str(d['id']), (int(cX), int(cY)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1) 
+
+        return image
+
+    def start_apriltag_detection(self):
+
+        self.apriltag_detection_image = self.get_detected_apriltags(self.apriltag_detection_image)
+
+        #self.apriltag_detection_image = cv2.cvtColor(self.apriltag_detection_image, cv2.COLOR_BGR2RGB)
+        self.apriltag_detection_image = Image.fromarray(self.apriltag_detection_image) # to PIL format
+        self.apriltag_detection_image = ImageTk.PhotoImage(self.apriltag_detection_image) # to ImageTk format
+        # Update image
+        self.open_cv_canvas.create_image(0, 0, anchor=tk.NW, image=self.apriltag_detection_image)
+        # Repeat every 'interval' ms
+        self.apriltag_detection_cancel_id = self.after(10, self.start_apriltag_detection)
+
+
+    def apriltag_detection_button_pressed(self):
+        if self.started_apriltag_detection:
+            self.started_apriltag_detection = False
+            self.apriltag_detection_button['text'] = 'AprilTag Detection'
+            self.open_cv_canvas.delete("all")
+            self.after_cancel(self.face_detection_cancel_id)
+        elif not self.started_lane_detection:
+            self.open_cv_canvas.delete("all")
+            self.apriltag_detector = apriltag("tag36h11")
+            self.started_apriltag_detection = True
+            self.apriltag_detection_button['text'] = 'AprilTag Detection*'
+            self.start_apriltag_detection()
+
+
 
 #------------------------------------------------------------
 # class DesktopUserInterfaceNode
