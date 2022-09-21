@@ -440,16 +440,6 @@ class DesktopUI(tk.Tk):
 
         detections = self.apriltag_detector.detect(gray_image)
 
-        # In the apriltag library, in apriltag_pywrap.c, need to comment out lines 243-246 
-        # so that a condition of ‘zero tags detected’ was allowed. Need to rebuild after 
-        # commenting these lines out.
-
-              # From apriltag_pywrap.c (243-246) in the apriltag library:
-              # if (N == 0 && errno == EAGAIN){
-              #     PyErr_Format(PyExc_RuntimeError, "Unable to create %d threads for detector", self->td->nthreads);
-              #     goto done;
-              # }
-
         print("Saw tags {} at\n{}". \
           format([d['id']     for d in detections],
                  np.array([d['center'] for d in detections])))
