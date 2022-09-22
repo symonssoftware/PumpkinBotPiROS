@@ -453,6 +453,9 @@ class DesktopUI(tk.Tk):
 
             cv2.putText(image, str(d['id']), (int(cX), int(cY)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1) 
 
+
+
+
         return image
 
     def start_apriltag_detection(self):
@@ -473,7 +476,7 @@ class DesktopUI(tk.Tk):
             self.started_apriltag_detection = False
             self.apriltag_detection_button['text'] = 'AprilTag Detection'
             self.open_cv_canvas.delete("all")
-            self.after_cancel(self.face_detection_cancel_id)
+            self.after_cancel(self.apriltag_detection_cancel_id)
         elif not self.started_lane_detection:
             self.open_cv_canvas.delete("all")
             self.apriltag_detector = apriltag("tag36h11")
