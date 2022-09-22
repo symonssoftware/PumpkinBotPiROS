@@ -14,7 +14,6 @@ import cv2
 from cv_bridge import CvBridge
 from PIL import Image, ImageTk
 from sensor_msgs.msg import Image as ROSImage
-from apriltag import apriltag
 
 # SSD CNN Constants
 SSD_INPUT_SIZE = 320
@@ -452,8 +451,6 @@ class DesktopUI(tk.Tk):
             cv2.circle(image, (int(cX), int(cY)), 2, (255, 0, 0), -1)   
 
             cv2.putText(image, str(d['id']), (int(cX), int(cY)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1) 
-
-
 
 
         return image
