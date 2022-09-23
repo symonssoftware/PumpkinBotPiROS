@@ -147,19 +147,30 @@ class DesktopUI(tk.Tk):
 
         # AprilTag Stuff
         CHESSBOARD_SQUARE_IN_M = 0.02 # NOT Tag Size but size of each square from the chessboard used for calibration
-
         square_length = CHESSBOARD_SQUARE_IN_M / 2
+
         self.apriltag_object_points = np.array([[-square_length, square_length, 0], 
                                                 [square_length, square_length, 0], 
                                                 [square_length, -square_length, 0], 
-                                                [-square_length, square_length, 0]])
+                                                [-square_length, -square_length, 0]])
 
-        # TODO - get this by subscribing to the camera_info topic
-        self.camera_matrix = np.array([[622.27892,  0.,      333.70651], 
-                                       [  0.,      622.97536, 211.43233], 
+        # TODO - get the Camera Matrix by subscribing to the camera_info topic
+
+        # |fx  0  cx|
+        # |0  fy  cy|
+        # |0   0   1|
+
+        # self.camera_matrix = np.array([[622.27892,  0.,      333.70651], 
+        #                                [  0.,      622.97536, 211.43233], 
+        #                                [  0.,        0.,         1.0]])
+        # self.dist_coeffs = np.array([0.007292, -0.162874, -0.006325, 0.004607, 0.000000])
+        
+        # Values from the TinkerTwins github
+        self.camera_matrix = np.array([[3156.71852,  0.,      359.097908], 
+                                       [  0.,      3129.52243, 239.736909], 
                                        [  0.,        0.,         1.0]])
-        self.dist_coeffs = np.array([0.007292, -0.162874, -0.006325, 0.004607, 0.000000])
- 
+        self.dist_coeffs = np.array([0.0, 0.0, 0.0, 0.00, 0.000000])
+
     def start_navigation(self):
         self.started_navigation = True
         #self.navigation_process = subprocess.Popen(["ros2", "launch", "nav2_bringup", "bringup_launch.py", "use_sim_time:=false", "params_file:=/home/ubuntu/ros2_ws/src/pumpkin_bot_bringup/config/nav2_params.yaml", "map:=/home/ubuntu/bonus_room.yaml"])
@@ -517,8 +528,6 @@ class DesktopUI(tk.Tk):
                 #     [0,0,-3],[0,3,-3],[3,3,-3],[3,0,-3]])
 
                 imgpts, jac = cv2.projectPoints(axis, rvec, tvec, self.camera_matrix, self.dist_coeffs)
-
-                #self.draw(image, np.delete(self.apriltag_object_points, -1, axis=1), imgpts)
                 self.draw(image, d, imgpts)
             else: continue
 
