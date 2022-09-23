@@ -14,6 +14,7 @@ import cv2
 from cv_bridge import CvBridge
 from PIL import Image, ImageTk
 from sensor_msgs.msg import Image as ROSImage
+from apriltag import apriltag
 
 # SSD CNN Constants
 SSD_INPUT_SIZE = 320
@@ -143,6 +144,21 @@ class DesktopUI(tk.Tk):
     #     self.open_cv_canvas.create_image(0, 0, image = self.current_frame, anchor = tk.NW)
 
     #     self.after(10, self.update_canvas)
+
+        # AprilTag Stuff
+        APRIL_TAG_SQUARE_IN_M = 0.02 # NOT Tag Size but size of each individual square in meters (20 mm)
+
+        square_length = APRIL_TAG_SQUARE_IN_M / 2
+        self.apriltag_object_points = np.array([[-square_length, square_length, 0], 
+                                                [square_length, square_length, 0], 
+                                                [square_length, -square_length, 0], 
+                                                [-square_length, square_length, 0]])
+
+        # TODO - get this by subscribing to the camera_info topic
+        self.camera_matrix = np.array([[622.27892,  0.,      333.70651], 
+                                       [  0.,      622.97536, 211.43233], 
+                                       [  0.,        0.,         1.0]])
+        self.dist_coeffs = np.array([0.007292, -0.162874, -0.006325, 0.004607, 0.000000])
  
     def start_navigation(self):
         self.started_navigation = True
@@ -434,26 +450,102 @@ class DesktopUI(tk.Tk):
         
         image = self.ros_frame
 
-        # # we have to turn the image into grayscale
+        # We have to turn the image into grayscale
         gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         detections = self.apriltag_detector.detect(gray_image)
 
-        print("Saw tags {} at\n{}". \
-          format([d['id']     for d in detections],
-                 np.array([d['center'] for d in detections])))
+        # print("Saw tags {} at\n{}". \
+        #   format([d['id']     for d in detections],
+        #          np.array([d['center'] for d in detections])))
 
         for d in detections:
             lb, rb, rt, lt = d['lb-rb-rt-lt']
             cv2.rectangle(image, (int(lt[0]), int(lt[1])), (int(rb[0]), int(rb[1])), (0, 0, 255), 1) 
 
             cX, cY = d['center']
-            cv2.circle(image, (int(cX), int(cY)), 2, (255, 0, 0), -1)   
+            #cv2.circle(image, (int(cX), int(cY)), 2, (255, 0, 0), -1)   
 
-            cv2.putText(image, str(d['id']), (int(cX), int(cY)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1) 
+            TEXT_FACE = cv2.FONT_HERSHEY_DUPLEX
+            TEXT_SCALE = 1.5
+            TEXT_THICKNESS = 2
+            TEXT = "00"
 
+            text_size, _ = cv2.getTextSize(TEXT, TEXT_FACE, TEXT_SCALE, TEXT_THICKNESS)
+            text_origin = (int(cX - text_size[0] // 2), int(cY + text_size[1] // 2))
+
+            cv2.putText(image, str(d['id']), text_origin, TEXT_FACE, 5.0, (255, 255, 0), 1) 
+
+            # Use the OpenCV pnp solver with SOLVEPNP_IPPE_SQUARE type
+            # https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html#ga549c2075fac14829ff4a58bc931c033d
+                            
+            # print(d['lb-rb-rt-lt'])
+            image_points = np.array([d['lb-rb-rt-lt']])
+            # print(imagePoints)
+    
+            SOLVEPNP_IPPE_SQUARE = 7 
+            _ret, rvec, tvec = cv2.solvePnP(self.apriltag_object_points, 
+                                            image_points, 
+                                            self.camera_matrix, 
+                                            self.dist_coeffs, 
+                                            useExtrinsicGuess=False, 
+                                            flags=SOLVEPNP_IPPE_SQUARE)
+            # print("rvec:", rvec)
+            #print("tvec:", tvec)
+            #R, _jacobian = cv2.Rodrigues(rvec)
+            # # print("R:", R)
+            # yaw = np.arctan2(R[0,2],R[2,2])*180/np.pi # 180//np.pi gets to integers?
+            # roll = np.arcsin(-R[1][2])*180/np.pi
+            # pitch = np.arctan2(R[1,0],R[1,1])*180/np.pi
+            # print(f"Yaw: {yaw} Pitch: {pitch} Roll: {roll}")
+
+            # for p in d['lb-rb-rt-lt']:
+            #     cv2.circle(image, (int(p[0]), int(p[1])), 3, (0,0,255), -1)
+
+            #point1 = (int(d['lb-rb-rt-lt'][0][0]), int(d['lb-rb-rt-lt'][0][1]))
+            # #point1 = (int(cX), int(cY))
+            #point2 = (int(R[0][0]), int(R[0][1]))
+            
+            #cv2.line(image, point1, point2, (255,0,0), 2)
+
+            # project 3D points to image plane
+
+            #axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3)
+            axis = np.float32([[0,0,0], [0,3,0], [3,3,0], [3,0,0],
+                 [0,0,-3],[0,3,-3],[3,3,-3],[3,0,-3]])
+
+            imgpts, jac = cv2.projectPoints(axis, rvec, tvec, self.camera_matrix, self.dist_coeffs)
+
+            #self.draw(image, np.delete(self.apriltag_object_points, -1, axis=1), imgpts)
+            self.draw(image, d, imgpts)
 
         return image
+
+    def draw(self, img, d, imgpts):
+
+        print(imgpts)
+        
+        # Draw the 3D axis
+        cX, cY = d['center']
+        
+        center_point = (int(cX), int(cY))
+        
+        imgpts = np.int32(imgpts).reshape(-1,2)
+
+        img = cv2.line(img, center_point, tuple(imgpts[0]), (255,0,0), 5) # X-axis
+        img = cv2.line(img, center_point, tuple(imgpts[1]), (0,255,0), 5) # Y-axis
+        img = cv2.line(img, center_point, tuple(imgpts[2]), (0,0,255), 5) # Z-axis
+    
+        # # Draw a 3D cube
+        #     # draw ground floor in green
+        # img = cv2.drawContours(img, [imgpts[:4]],-1,(0,255,0),-3)
+        # # draw pillars in blue color
+        # for i,j in zip(range(4),range(4,8)):
+        #     img = cv2.line(img, tuple(imgpts[i]), tuple(imgpts[j]),(255),3)
+        # # draw top layer in red color
+        # img = cv2.drawContours(img, [imgpts[4:]],-1,(0,0,255),3)
+
+        return img
 
     def start_apriltag_detection(self):
 
