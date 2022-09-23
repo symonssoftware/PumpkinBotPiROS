@@ -146,9 +146,9 @@ class DesktopUI(tk.Tk):
     #     self.after(10, self.update_canvas)
 
         # AprilTag Stuff
-        APRIL_TAG_SQUARE_IN_M = 0.02 # NOT Tag Size but size of each individual square in meters (20 mm)
+        CHESSBOARD_SQUARE_IN_M = 0.02 # NOT Tag Size but size of each square from the chessboard used for calibration
 
-        square_length = APRIL_TAG_SQUARE_IN_M / 2
+        square_length = CHESSBOARD_SQUARE_IN_M / 2
         self.apriltag_object_points = np.array([[-square_length, square_length, 0], 
                                                 [square_length, square_length, 0], 
                                                 [square_length, -square_length, 0], 
@@ -490,34 +490,37 @@ class DesktopUI(tk.Tk):
                                             self.dist_coeffs, 
                                             useExtrinsicGuess=False, 
                                             flags=SOLVEPNP_IPPE_SQUARE)
-            # print("rvec:", rvec)
-            #print("tvec:", tvec)
-            #R, _jacobian = cv2.Rodrigues(rvec)
-            # # print("R:", R)
-            # yaw = np.arctan2(R[0,2],R[2,2])*180/np.pi # 180//np.pi gets to integers?
-            # roll = np.arcsin(-R[1][2])*180/np.pi
-            # pitch = np.arctan2(R[1,0],R[1,1])*180/np.pi
-            # print(f"Yaw: {yaw} Pitch: {pitch} Roll: {roll}")
 
-            # for p in d['lb-rb-rt-lt']:
-            #     cv2.circle(image, (int(p[0]), int(p[1])), 3, (0,0,255), -1)
+            if _ret:
+                # print("rvec:", rvec)
+                #print("tvec:", tvec)
+                #R, _jacobian = cv2.Rodrigues(rvec)
+                # # print("R:", R)
+                # yaw = np.arctan2(R[0,2],R[2,2])*180/np.pi # 180//np.pi gets to integers?
+                # roll = np.arcsin(-R[1][2])*180/np.pi
+                # pitch = np.arctan2(R[1,0],R[1,1])*180/np.pi
+                # print(f"Yaw: {yaw} Pitch: {pitch} Roll: {roll}")
 
-            #point1 = (int(d['lb-rb-rt-lt'][0][0]), int(d['lb-rb-rt-lt'][0][1]))
-            # #point1 = (int(cX), int(cY))
-            #point2 = (int(R[0][0]), int(R[0][1]))
-            
-            #cv2.line(image, point1, point2, (255,0,0), 2)
+                # for p in d['lb-rb-rt-lt']:
+                #     cv2.circle(image, (int(p[0]), int(p[1])), 3, (0,0,255), -1)
 
-            # project 3D points to image plane
+                #point1 = (int(d['lb-rb-rt-lt'][0][0]), int(d['lb-rb-rt-lt'][0][1]))
+                # #point1 = (int(cX), int(cY))
+                #point2 = (int(R[0][0]), int(R[0][1]))
+                
+                #cv2.line(image, point1, point2, (255,0,0), 2)
 
-            #axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3)
-            axis = np.float32([[0,0,0], [0,3,0], [3,3,0], [3,0,0],
-                 [0,0,-3],[0,3,-3],[3,3,-3],[3,0,-3]])
+                # project 3D points to image plane
 
-            imgpts, jac = cv2.projectPoints(axis, rvec, tvec, self.camera_matrix, self.dist_coeffs)
+                axis = np.float32([[3,0,0], [0,3,0], [0,0,-3]]).reshape(-1,3)
+                # axis = np.float32([[0,0,0], [0,3,0], [3,3,0], [3,0,0],
+                #     [0,0,-3],[0,3,-3],[3,3,-3],[3,0,-3]])
 
-            #self.draw(image, np.delete(self.apriltag_object_points, -1, axis=1), imgpts)
-            self.draw(image, d, imgpts)
+                imgpts, jac = cv2.projectPoints(axis, rvec, tvec, self.camera_matrix, self.dist_coeffs)
+
+                #self.draw(image, np.delete(self.apriltag_object_points, -1, axis=1), imgpts)
+                self.draw(image, d, imgpts)
+            else: continue
 
         return image
 
@@ -530,19 +533,19 @@ class DesktopUI(tk.Tk):
         
         center_point = (int(cX), int(cY))
         
-        imgpts = np.int32(imgpts).reshape(-1,2)
+        imgpts = np.int32(imgpts).reshape(-1, 2)
 
         img = cv2.line(img, center_point, tuple(imgpts[0]), (255,0,0), 5) # X-axis
         img = cv2.line(img, center_point, tuple(imgpts[1]), (0,255,0), 5) # Y-axis
         img = cv2.line(img, center_point, tuple(imgpts[2]), (0,0,255), 5) # Z-axis
     
-        # # Draw a 3D cube
-        #     # draw ground floor in green
-        # img = cv2.drawContours(img, [imgpts[:4]],-1,(0,255,0),-3)
+        # Draw a 3D cube
+            # draw ground floor in green
+        #img = cv2.drawContours(img, [imgpts[:4]],-1,(0,255,0),-3)
         # # draw pillars in blue color
         # for i,j in zip(range(4),range(4,8)):
         #     img = cv2.line(img, tuple(imgpts[i]), tuple(imgpts[j]),(255),3)
-        # # draw top layer in red color
+        # # # draw top layer in red color
         # img = cv2.drawContours(img, [imgpts[4:]],-1,(0,0,255),3)
 
         return img
