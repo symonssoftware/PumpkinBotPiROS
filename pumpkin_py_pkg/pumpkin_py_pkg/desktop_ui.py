@@ -146,8 +146,8 @@ class DesktopUI(tk.Tk):
     #     self.after(10, self.update_canvas)
 
         # AprilTag Stuff
-        CHESSBOARD_SQUARE_IN_M = 0.02 # NOT Tag Size but size of each square from the chessboard used for calibration
-        square_length = CHESSBOARD_SQUARE_IN_M / 2
+        APRIL_TAG_SIZE_IN_M = 0.1651
+        square_length = APRIL_TAG_SIZE_IN_M / 8
 
         self.apriltag_object_points = np.array([[-square_length, square_length, 0], 
                                                 [square_length, square_length, 0], 
@@ -491,20 +491,23 @@ class DesktopUI(tk.Tk):
             # https://docs.opencv.org/3.4/d9/d0c/group__calib3d.html#ga549c2075fac14829ff4a58bc931c033d
                             
             # print(d['lb-rb-rt-lt'])
-            image_points = np.array([d['lb-rb-rt-lt']])
-            # print(imagePoints)
-    
-            SOLVEPNP_IPPE_SQUARE = 7 
+            #image_points = np.array([d['lb-rb-rt-lt']])
+            
+            # Do we need to flip these to keep them in the same order as the object points?
+            flipped_image_points = np.fliplr(np.array([d['lb-rb-rt-lt']]))
+
             _ret, rvec, tvec = cv2.solvePnP(self.apriltag_object_points, 
-                                            image_points, 
+                                            flipped_image_points, 
                                             self.camera_matrix, 
                                             self.dist_coeffs, 
                                             useExtrinsicGuess=False, 
-                                            flags=SOLVEPNP_IPPE_SQUARE)
+                                            flags=cv2.SOLVEPNP_IPPE_SQUARE)
 
             if _ret:
-                # print("rvec:", rvec)
-                #print("tvec:", tvec)
+                print("rvec:", rvec)
+                print("-------------------------")
+                print("tvec:", tvec)
+                print("=========================")
                 #R, _jacobian = cv2.Rodrigues(rvec)
                 # # print("R:", R)
                 # yaw = np.arctan2(R[0,2],R[2,2])*180/np.pi # 180//np.pi gets to integers?
@@ -534,8 +537,6 @@ class DesktopUI(tk.Tk):
         return image
 
     def draw(self, img, d, imgpts):
-
-        print(imgpts)
         
         # Draw the 3D axis
         cX, cY = d['center']
@@ -543,19 +544,20 @@ class DesktopUI(tk.Tk):
         center_point = (int(cX), int(cY))
         
         imgpts = np.int32(imgpts).reshape(-1, 2)
+        #print(imgpts)
 
         img = cv2.line(img, center_point, tuple(imgpts[0]), (255,0,0), 5) # X-axis
         img = cv2.line(img, center_point, tuple(imgpts[1]), (0,255,0), 5) # Y-axis
         img = cv2.line(img, center_point, tuple(imgpts[2]), (0,0,255), 5) # Z-axis
     
         # Draw a 3D cube
-            # draw ground floor in green
+        # draw ground floor in green
         #img = cv2.drawContours(img, [imgpts[:4]],-1,(0,255,0),-3)
-        # # draw pillars in blue color
-        # for i,j in zip(range(4),range(4,8)):
+        # draw pillars in blue color
+        #for i,j in zip(range(4),range(4,8)):
         #     img = cv2.line(img, tuple(imgpts[i]), tuple(imgpts[j]),(255),3)
-        # # # draw top layer in red color
-        # img = cv2.drawContours(img, [imgpts[4:]],-1,(0,0,255),3)
+        # draw top layer in red color
+        #img = cv2.drawContours(img, [imgpts[4:]],-1,(0,0,255),3)
 
         return img
 
