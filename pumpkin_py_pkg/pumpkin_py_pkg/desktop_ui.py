@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
+import collections
 import os
 from tkinter.constants import LEFT, RIGHT
 import rclpy
@@ -439,15 +440,30 @@ class DesktopUI(tk.Tk):
         
         image = self.ros_frame
 
+        # |fx  0  cx|
+        # |0  fy  cy|
+        # |0   0   1|
+
         # TODO Get camera config from the camera_info message
-        _, overlay = detect_tags(image,
-                                 self.apriltag_detector,
-                                 camera_params=(3156.71852, 3129.52243, 359.097908, 239.736909),
-                                 tag_size=0.1651,
-                                 vizualization=3,
-                                 verbose=3,
-                                 annotation=True
-                                )
+        result, overlay = detect_tags(image,
+                                     self.apriltag_detector,
+                                     #camera_params=(3156.71852, 3129.52243, 359.097908, 239.736909),
+                                     camera_params=(622.27892, 622.97536, 333.70651, 211.43233),
+                                     tag_size=0.1651,
+                                     vizualization=3,
+                                     verbose=0,
+                                     annotation=True
+                                    )
+        if result:                            
+            # print(result[0].tostring(collections.OrderedDict([('Pose', result[1]),
+            #                                                   ('InitError', result[2]),
+            #                                                   ('FinalError', result[3])]),
+            #                                                   indent=2))
+            #print(result[0].tostring())
+            print('Tag ID: {}'.format(result[0].tag_id))
+            print(result[0].tostring(collections.OrderedDict([('Pose', result[1])]),
+                                                                indent=1))
+            print("=================================================")
 
         return overlay
 
