@@ -22,6 +22,8 @@ from .april_tag import Detector
 from .april_tag import _get_dll_path
 from .april_tag import detect_tags
 
+import math
+
 # SSD CNN Constants
 SSD_INPUT_SIZE = 320
 
@@ -61,9 +63,11 @@ class DesktopUI(tk.Tk):
         left_frame.pack_propagate(0)
         left_frame.grid(row=0, column=0, pady=(10,10))
 
-        self.status_label = tk.Label(self, bg="black", fg="orange", text="Status: Initializing", font=("Arial", 22), takefocus=0)
+        self.status_label = tk.Label(self, bg="black", fg="orange", text="                                     ", font=("Arial", 22), takefocus=0)
         self.status_label.grid(row=1, column=1, pady=(25,0))
-
+        self.status_label2 = tk.Label(self, bg="black", fg="orange", text="                                     ", font=("Arial", 22), takefocus=0)
+        self.status_label2.grid(row=2, column=1, pady=(25,0))
+        
         right_frame = Frame(self, borderwidth=3, relief=tk.SUNKEN, width=300, height=600)
         right_frame.pack_propagate(0)
         right_frame.grid(row=0, column=2, pady=(10,10))
@@ -464,12 +468,24 @@ class DesktopUI(tk.Tk):
             # print(result[0].tostring(collections.OrderedDict([('Pose', result[1])]),
             #                                                     indent=1))
             #print(result[1])
+            r11 = result[1][0][0]
+            r21 = result[1][1][0]
+            r31 = result[1][2][0]
+            r32 = result[1][2][1]
+            r33 = result[1][2][2]
+
+            yaw = "{:.2f}".format(np.degrees(np.arctan2(r21, r11)))
+            pitch = "{:.2f}".format(np.degrees(np.arctan2(-r31, math.sqrt(r32**2 + r33**2))))
+            roll = "{:.2f}".format(np.degrees(np.arctan2(r32, r33)))
+
             tx = "{:.4f}".format(result[1][0][3])
             ty = "{:.4f}".format(result[1][1][3])
             tz = "{:.4f}".format(result[1][2][3])
             print(f'TX: {tx} TY: {ty} TZ: {tz}')
+            print(f'Yaw: {yaw} Pitch: {pitch} Roll: {roll}')
             print("=================================================")
             self.status_label.config(text=f'TX: {tx} TY: {ty} TZ: {tz}')
+            self.status_label2.config(text=f'Y: {yaw} P: {pitch} R: {roll}')
 
         return overlay
 
