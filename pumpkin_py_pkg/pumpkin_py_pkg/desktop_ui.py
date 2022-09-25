@@ -461,9 +461,15 @@ class DesktopUI(tk.Tk):
             #                                                   indent=2))
             #print(result[0].tostring())
             print('Tag ID: {}'.format(result[0].tag_id))
-            print(result[0].tostring(collections.OrderedDict([('Pose', result[1])]),
-                                                                indent=1))
+            # print(result[0].tostring(collections.OrderedDict([('Pose', result[1])]),
+            #                                                     indent=1))
+            #print(result[1])
+            tx = "{:.4f}".format(result[1][0][3])
+            ty = "{:.4f}".format(result[1][1][3])
+            tz = "{:.4f}".format(result[1][2][3])
+            print(f'TX: {tx} TY: {ty} TZ: {tz}')
             print("=================================================")
+            self.status_label.config(text=f'TX: {tx} TY: {ty} TZ: {tz}')
 
         return overlay
 
