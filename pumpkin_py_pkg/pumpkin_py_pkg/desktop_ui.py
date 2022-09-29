@@ -527,7 +527,8 @@ class DesktopUserInterfaceNode(Node):
         # from the video_frames topic. The queue size is 10 messages.
         self.video_frames_subscription = self.create_subscription(
             ROSImage, 
-            'image_raw', 
+            'image', # from pi using cam_2_image
+            #'image_raw', # when using usb_cam
             self.video_frames_listener_callback, 
             10)
         self.video_frames_subscription # prevent unused variable warning
